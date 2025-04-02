@@ -1,5 +1,5 @@
 const path = require('path');
-const session = require('express-session'); // For using sessions
+// const session = require('express-session'); // For using sessions
 const cors = require('cors');
 const express = require('express');
 const bodyParser = require('body-parser');
@@ -72,11 +72,11 @@ app.use(cookieParser()); // ✅ Add `cookie-parser`
 // }));
 
 
-app.use(session({
-  secret: process.env.SESSION_SECRET || 'defaultSecretKey',
-  resave: false,
-  saveUninitialized: true
-}));
+// app.use(session({
+//   secret: process.env.SESSION_SECRET || 'defaultSecretKey',
+//   resave: false,
+//   saveUninitialized: true
+// }));
 
 
 // ✅ Initialize Passport
