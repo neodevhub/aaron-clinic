@@ -309,7 +309,7 @@ function deleteNewSection(sectionId) {
       method: 'DELETE',
       headers: { Authorization: `Bearer ${token}` },
       success: function () {
-        loadSections();
+        loadNewSections();
       },
       error: function () {
         alert('Failed to delete section.');
