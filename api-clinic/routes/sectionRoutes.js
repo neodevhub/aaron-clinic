@@ -299,6 +299,28 @@ router.delete('/section/:sectionId', verifyToken, async (req, res) => {
     }
 });
 
+// Delete a category inside a section
+router.delete('/section/:sectionId/category/:categoryId', verifyToken, async (req, res) => {
+    try {
+        const { sectionId, categoryId } = req.params;
+
+        const section = await SectionNew.findOneAndUpdate(
+            { sectionId },
+            { $pull: { categories: { categoryId: new mongoose.Types.ObjectId(categoryId) } } },
+            { new: true }
+        );
+
+        if (!section) {
+            return res.status(404).json({ message: 'Section not found or category does not exist' });
+        }
+
+        res.json({ message: 'Category deleted successfully', section });
+    } catch (err) {
+        res.status(500).json({ error: 'An error occurred while deleting the category' });
+    }
+});
+
+
 // Fetch categories for a specific section
 router.get('/section/:sectionId/categories', verifyToken, async (req, res) => {
     try {

@@ -131,7 +131,7 @@ function viewNewCategories(sectionId, sectionTitle) {
                 
                 <button class="btn btn-warning btn-sm" onclick="newOpenEditPopup('category', '${sectionId}', ${safeCategoryData})">Edit</button>
 
-                <button class="btn btn-danger btn-sm" onclick="deleteNewCategory('${sectionId}', '${category.categoryId}')">Delete</button>
+                <button class="btn btn-danger btn-sm" onclick="deleteNewCategory('${sectionId}', '${category.categoryId}', '${sectionTitle}')">Delete</button>
 
                 <div class="form-check form-switch mt-2">
                   <input class="form-check-input" type="checkbox" role="switch" id="switch-${category.categoryId}"
@@ -301,14 +301,15 @@ function loadNewCategories1(sectionId) {
 }
 
 
-// Delete item
+// Delete section
 function deleteNewSection(sectionId) {
   if (confirm('Are you sure you want to delete this section?')) {
     $.ajax({
-      url: `${API_BASE_URL}/dashboard/section/${sectionId}`,
+      url: `${API_BASE_URL}/newsection/section/${sectionId}`,
       method: 'DELETE',
       headers: { Authorization: `Bearer ${token}` },
       success: function () {
+        alert('deleded successfully!');
         loadNewSections();
       },
       error: function () {
@@ -317,6 +318,27 @@ function deleteNewSection(sectionId) {
     });
   }
 }
+
+
+// Delete category inside a section
+function deleteNewCategory(sectionId, categoryId, sectionTitle) {
+  if (confirm('Are you sure you want to delete this category?')) {
+    $.ajax({
+      url: `${API_BASE_URL}/newsection/section/${sectionId}/category/${categoryId}`,
+      method: 'DELETE',
+      headers: { Authorization: `Bearer ${token}` },
+      success: function () {
+        alert('Category deleted successfully!');
+        loadNewSections();
+        viewNewCategories(sectionId, sectionTitle);
+      },
+      error: function () {
+        alert('Failed to delete category.');
+      },
+    });
+  }
+}
+
 
 
 function newSectionToggleStatus(type, id, isChecked) {
