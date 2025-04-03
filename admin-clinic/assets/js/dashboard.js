@@ -9,9 +9,10 @@ if (!token) {
   alert('Unauthorized! Please login first.');
   window.location.href = 'index.html';
 }
-$('#addArticleBtn').click(function () {
-  $('#addArticlePopup').modal('show');
-});
+// $('.addArticleBtn').click(function () {
+//   console.log("addArticleBtn clicked");
+//   $('#addArticlePopup').modal('show');
+// });
 //#endregion
 
 $('#subCategoryContentEs').summernote({
@@ -501,39 +502,44 @@ function loadArticles() {
     method: 'GET',
     headers: { Authorization: `Bearer ${token}` },
     success: function (response) {
-      let articlesHTML = '<h3>Articles</h3> <div class="row">';
+      console.log("response", response);
+      let articlesHTML = '<button type="button" class="btn btn-primary add-float" data-bs-toggle="modal" data-bs-target="#addArticlePopup">Add New Article </button><h3>Articles</h3> <div class="row">';
 
-      response.forEach(article => {
-        const isChecked = article.status === 'Published' ? 'checked' : '';
-        articlesHTML += `
-          <div class="col-lg-2 mb-4">
-            <div class="card">
-              <img src="${article.images[0] || 'default-image.jpg'}" class="card-img-top" alt="${article.title}">
-              <div class="card-body">
-                <h5 class="card-title">${article.title}</h5>
-                <p class="card-text">${article.summary}</p>
-                
-                <button class="btn btn-primary btn-sm" onclick="viewArticle('${article._id}')">Read More</button>
-                <button class="btn btn-warning btn-sm" onclick="editArticle('${article._id}')">Edit</button>
-                <button class="btn btn-danger btn-sm" onclick="deleteArticle('${article._id}')">Delete</button>
-
-                <!-- Switch Toggle for Publish/Unpublish -->
-                <div class="form-check form-switch mt-2">
-                  <input class="form-check-input" type="checkbox" role="switch" id="switch-${article._id}"
-                    ${isChecked} onclick="toggleStatus('${article._id}', this.checked)">
-                  <label class="form-check-label" for="switch-${article._id}">
-                    ${article.status}
-                  </label>
+      if(response?.length > 0) {  
+        response.forEach(article => {
+          const isChecked = article.status === 'Published' ? 'checked' : '';
+          articlesHTML += `
+            <div class="col-lg-2 mb-4">
+              <div class="card">
+                <img src="${article.images[0] || 'default-image.jpg'}" class="card-img-top" alt="${article.title}">
+                <div class="card-body">
+                  <h5 class="card-title">${article.title}</h5>
+                  <p class="card-text">${article.summary}</p>
+                  
+                  <button class="btn btn-primary btn-sm" onclick="viewArticle('${article._id}')">Read More</button>
+                  <button class="btn btn-warning btn-sm" onclick="editArticle('${article._id}')">Edit</button>
+                  <button class="btn btn-danger btn-sm" onclick="deleteArticle('${article._id}')">Delete</button>
+  
+                  <!-- Switch Toggle for Publish/Unpublish -->
+                  <div class="form-check form-switch mt-2">
+                    <input class="form-check-input" type="checkbox" role="switch" id="switch-${article._id}"
+                      ${isChecked} onclick="toggleStatus('${article._id}', this.checked)">
+                    <label class="form-check-label" for="switch-${article._id}">
+                      ${article.status}
+                    </label>
+                  </div>
                 </div>
               </div>
-            </div>
-          </div>`;
-      });
-      articlesHTML += '</div>';
-      $('#content').html(articlesHTML);
+            </div>`;
+        });
+        articlesHTML += '</div>';
+        $('#content').html(articlesHTML);
+      } else {
+        $('#content').html('<button type="button" class="btn btn-primary add-float" data-bs-toggle="modal" data-bs-target="#addArticlePopup">Add New Article </button><p class="text-danger">No articles available.</p>');
+      }
     },
     error: function () {
-      $('#content').html('<p class="text-danger">Failed to load articles.</p>');
+      $('#content').html('<button type="button" class="btn btn-primary add-float" data-bs-toggle="modal" data-bs-target="#addArticlePopup">Add New Article </button><p class="text-danger">No articles available.</p>');
     },
   });
 }

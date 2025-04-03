@@ -88,14 +88,14 @@
                 </li>
 
             </ul>
-            <button class="btn btn-success w-100 my-3" id="addArticleBtn"><i class="fas fa-plus"></i> Add new
-                article</button>
+            <!-- <button class="btn btn-success w-100 my-3" id="addArticleBtn"><i class="fas fa-plus"></i> Add new
+                article</button> -->
             <!-- <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addSectionModal">
                 Add New Section
             </button> -->
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addNewSectionModal">
+            <!-- <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addNewSectionModal">
                 Add New Section
-            </button>
+            </button> -->
         </div>
 
         <!-- Page Content -->
@@ -137,27 +137,27 @@
 
                         <div class="form-group">
                             <label>Title</label>
-                            <input type="text" id="editTitle" class="form-control" required>
+                            <input type="text" id="editTitle" class="form-control">
                         </div>
 
                         <div class="form-group">
                             <label>Summary</label>
-                            <textarea id="editSummary" class="form-control" required></textarea>
+                            <textarea id="editSummary" class="form-control"></textarea>
                         </div>
 
                         <div class="form-group">
                             <label>Content</label>
-                            <textarea id="editContent" class="form-control" rows="5" required></textarea>
+                            <textarea id="editContent" class="form-control" rows="5"></textarea>
                         </div>
 
                         <div class="form-group">
                             <label>Author</label>
-                            <input type="text" id="editAuthor" class="form-control" required>
+                            <input type="text" id="editAuthor" class="form-control">
                         </div>
 
                         <div class="form-group">
                             <label>Category</label>
-                            <input type="text" id="editCategory" class="form-control" required>
+                            <input type="text" id="editCategory" class="form-control">
                         </div>
 
                         <div class="form-group">
@@ -218,27 +218,27 @@
                     <form id="addArticleForm">
                         <div class="mb-3">
                             <label for="title" class="form-label">Title</label>
-                            <input type="text" class="form-control" id="addtitle" required>
+                            <input type="text" class="form-control" id="addtitle">
                         </div>
 
                         <div class="mb-3">
                             <label for="content" class="form-label">Content</label>
-                            <textarea class="form-control" id="addcontent" rows="5" required></textarea>
+                            <textarea class="form-control" id="addcontent" rows="5"></textarea>
                         </div>
 
                         <div class="mb-3">
                             <label for="summary" class="form-label">Summary</label>
-                            <textarea class="form-control" id="addsummary" rows="3" required></textarea>
+                            <textarea class="form-control" id="addsummary" rows="3"></textarea>
                         </div>
 
                         <div class="mb-3">
                             <label for="category" class="form-label">Category</label>
-                            <input type="text" class="form-control" id="addcategory" required>
+                            <input type="text" class="form-control" id="addcategory">
                         </div>
 
                         <div class="mb-3">
                             <label for="author" class="form-label">Author</label>
-                            <input type="text" class="form-control" id="addauthor" required>
+                            <input type="text" class="form-control" id="addauthor">
                         </div>
 
                         <!-- Article Images -->
@@ -324,9 +324,9 @@
                         <div class="mb-3">
                             <label class="form-label">Add a New Section</label>
                             <input type="text" id="sectionTitleEs" class="form-control mt-2"
-                                placeholder="Title in Spanish" required>
+                                placeholder="Title in Spanish">
                             <input type="url" id="sectionImage" class="form-control mt-2"
-                                placeholder="Section Image URL" required>
+                                placeholder="Section Image URL">
                         </div>
 
                         <!-- Select or Add a Category -->
@@ -339,18 +339,18 @@
                         <div class="mb-3">
                             <label class="form-label">Add a New Category</label>
                             <input type="text" id="categoryTitleEs" class="form-control mt-2"
-                                placeholder="Title in Spanish" required>
+                                placeholder="Title in Spanish">
                             <input type="url" id="categoryImage" class="form-control mt-2"
-                                placeholder="Category Image URL" required>
+                                placeholder="Category Image URL">
                         </div>
 
                         <!-- Select or Add a Subcategory -->
                         <div class="mb-3">
                             <label class="form-label">Add a Subcategory</label>
                             <input type="text" id="subCategoryTitleEs" class="form-control mt-2"
-                                placeholder="Title in Spanish" required>
+                                placeholder="Title in Spanish">
                             <input type="url" id="subCategoryImage" class="form-control mt-2"
-                                placeholder="Subcategory Image URL" required>
+                                placeholder="Subcategory Image URL">
                         </div>
 
                         <!-- Subcategory Content -->
@@ -360,7 +360,7 @@
                                 placeholder="Content in Spanish" required></textarea> -->
 
                             <!-- #editor-container' -->
-                            <textarea id="subCategoryContentEs" class="form-control mt-2" placeholder="Content in Spanish" required></textarea>
+                            <textarea id="subCategoryContentEs" class="form-control mt-2" placeholder="Content in Spanish"></textarea>
                         </div>
 
                         <div class="modal-footer">
@@ -400,7 +400,7 @@
                         <div class="mb-3">
                             <label id="lblEditContentEs" for="editContentEs" class="form-label">Content (Spanish)</label>
                             <textarea id="subCategoryEditContentEs" class="form-control mt-2"
-                                placeholder="Content in Spanish" required></textarea>
+                                placeholder="Content in Spanish"></textarea>
                         </div>
 
                         
@@ -441,7 +441,7 @@
                     <div class="mb-3">
                         <label id="newLblEditContentEs" for="newEditContentEs" class="form-label">Content (Spanish)</label>
                         <textarea id="newCategoryEditContentEs" class="form-control mt-2"
-                            placeholder="Content in Spanish" required></textarea>
+                            placeholder="Content in Spanish"></textarea>
                     </div>
 
                     
@@ -475,17 +475,17 @@
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Add a New Section</label>
-                        <input type="text" id="newSectionTitleEs" class="form-control mt-2" placeholder="Title in Spanish" required>
-                        <input type="url" id="newSectionImage" class="form-control mt-2" placeholder="Section Image URL" required>
+                        <input type="text" id="newSectionTitleEs" class="form-control mt-2" placeholder="Title in Spanish">
+                        <input type="url" id="newSectionImage" class="form-control mt-2" placeholder="Section Image URL">
                     </div>
 
                     <!-- Select or Add a Category -->
                     <div class="mb-3">
                         <label class="form-label">Add a New Category</label>
-                        <input type="text" id="newCategoryTitleEs" class="form-control mt-2" placeholder="Title in Spanish" required>
-                        <input type="url" id="newCategoryImage" class="form-control mt-2" placeholder="Category Image URL" required>
+                        <input type="text" id="newCategoryTitleEs" class="form-control mt-2" placeholder="Title in Spanish">
+                        <input type="url" id="newCategoryImage" class="form-control mt-2" placeholder="Category Image URL">
                         <textarea id="newCategoryContentEs" class="form-control mt-2"
-                        placeholder="Content in Spanish" required></textarea>
+                        placeholder="Content in Spanish"></textarea>
                     </div>
 
                     <div class="modal-footer">

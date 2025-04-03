@@ -130,3 +130,23 @@ table.table.table-bordered {
   border: none !important;
   border-color: #f0f8ff00 !important;
 }
+
+.add-float {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  width: auto; /* يمنع الزر من الامتداد إلى العرض الكامل */
+  padding: 10px 20px;
+  border-radius: 5px;
+  z-index: 1000; /* للتأكد من أنه فوق بقية العناصر */
+  width: 100px !important;
+  border-radius: 300px !important;
+}
+
+.breadcrumb a {
+  
+  color: #007bff !important;
+  text-decoration: none !important;
+  background-color: transparent !important;
+  cursor: pointer !important;
+}
