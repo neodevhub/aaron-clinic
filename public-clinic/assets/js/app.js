@@ -161,7 +161,7 @@ loadSectionsStatic();
           $('#categoriesSection').append(`
                   <div class="col-md-4 mb-4">
                       <div class="card category-card" data-category-id="${categoryId}">
-                          <img src="${category.imageUrl}" class="card-img-top" alt="${title}">
+                          <img src="${category.imageUrl}" class="card-img-top" alt="${title}" style="max-height: 233px !important;">
                           <div class="card-body">
                               <h5 class="card-title">${title}</h5>
                               <a href="javascript:void(0);" class="btn btn-primary">Read More</a>

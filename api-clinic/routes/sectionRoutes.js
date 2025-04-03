@@ -33,12 +33,12 @@ router.get('/nav/section', async (req, res) => {
 router.get('/navstatic/section', async (req, res) => {
     try {
       const staticSections = [
-        { title: 'Team', page:'team', i18next:'team', categories: [] },
+        { title: 'Equipo', page:'team', i18next:'team', categories: [] },
         { title: 'Patologías', page:'pathologies', i18next:'pathologies', categories: [] },
-        { title: 'Treatments', page:'treatments', i18next:'treatments', categories: [] },
-        { title: 'Medical-Legal Expertise', page:'medical-legal-expertise', i18next:'medical_legal_expertise', categories: [] },
-        { title: 'Information & Advice', page:'information-advice', i18next:'information_and_advice', categories: [] },
-        { title: 'Contact',page:'contact',  i18next:'contact', categories: [] }
+        { title: 'Tratamientos', page:'treatments', i18next:'treatments', categories: [] },
+        { title: 'Peritaje Médico-Legal', page:'medical-legal-expertise', i18next:'medical_legal_expertise', categories: [] },
+        { title: 'Información y Consejos', page:'information-advice', i18next:'information_and_advice', categories: [] },
+        { title: 'Contacto',page:'contact',  i18next:'contact', categories: [] }
       ];
   
       
