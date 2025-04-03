@@ -1,5 +1,6 @@
 const path = require('path');
 const session = require('express-session'); // For using sessions
+const MongoStore = require('connect-mongo');
 const cors = require('cors');
 const express = require('express');
 const bodyParser = require('body-parser');
@@ -75,8 +76,20 @@ app.use(cookieParser()); // ✅ Add `cookie-parser`
 app.use(session({
   secret: process.env.SESSION_SECRET || 'defaultSecretKey',
   resave: false,
-  saveUninitialized: true
+  saveUninitialized: true,
+  store: MongoStore.create({
+    mongoUrl: process.env.MONGO_URI,
+    collectionName: 'sessions',
+  }),
+  cookie: { secure: false, maxAge: 1000 * 60 * 60 * 24 } // 1-day session
 }));
+
+
+// app.use(session({
+//   secret: process.env.SESSION_SECRET || 'defaultSecretKey',
+//   resave: false,
+//   saveUninitialized: true
+// }));
 
 
 // ✅ Initialize Passport
