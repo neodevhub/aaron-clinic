@@ -329,7 +329,6 @@ function deleteNewCategory(sectionId, categoryId, sectionTitle) {
       headers: { Authorization: `Bearer ${token}` },
       success: function () {
         alert('Category deleted successfully!');
-        loadNewSections();
         viewNewCategories(sectionId, sectionTitle);
       },
       error: function () {
