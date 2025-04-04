@@ -1,11 +1,11 @@
 const mongoose = require('mongoose');
 
 const userSchema = new mongoose.Schema({
-  fullName: { type: String, required: true },
-  email: { type: String, required: true },
-  phone: { type: String, required: true },
-  contactMethod: { type: String, required: true },
-  consultationType: { type: String, required: true },
+  fullName: { type: String, required: false },
+  email: { type: String, required: false },
+  phone: { type: String, required: false },
+  contactMethod: { type: String, required: false },
+  consultationType: { type: String, required: false },
   additionalInfo: { type: String },
   createdAt: { type: Date, default: Date.now },
 });

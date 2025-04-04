@@ -24,10 +24,15 @@
 //     ]
 //   });
 
+
+
 $(document).ready(function () {
 
 
-  $('#newSectionsLink').on('click', function () {
+  $('#newSectionsLink').on('click', function (e) {
+    e.preventDefault();
+    window.location.hash = 'sections';
+    setActiveTab('newSectionsLink');
     loadNewSections();
   });
 

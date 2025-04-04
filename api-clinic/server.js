@@ -260,10 +260,11 @@ app.post('/addYearAppointments', async (req, res) => {
 
 // Request Consultation
 app.post('/addUser', async (req, res) => {
-  const { fullName, email, phone, contactMethod, consultationType, additionalInfo } = req.body;
+  console.log("req.body", req.body);
+  const { fullName, email, phone, additionalInfo } = req.body;
 
-  if (!fullName || !email || !phone || !contactMethod || !consultationType) {
-    return res.status(400).json({ error: 'Please provide all required fields.' });
+  if (!fullName || !email) {
+    return res.status(400).json({ error: 'Please provide all required fields1111.' });
   }
 
   try {
@@ -271,8 +272,6 @@ app.post('/addUser', async (req, res) => {
       fullName,
       email,
       phone,
-      contactMethod,
-      consultationType,
       additionalInfo: additionalInfo || '',
       createdAt: new Date(),
     });

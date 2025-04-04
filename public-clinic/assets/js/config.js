@@ -1,20 +1,74 @@
 // URL الأساسي للسيرفر
-// const API_BASE_URL = "http://localhost:3000";
+const API_BASE_URL = "http://localhost:3000";
 // const API_BASE_URL = 'https://user-api-server.onrender.com';
-const API_BASE_URL = 'https://aaron-clinic-1.onrender.com';
+// const API_BASE_URL = 'https://aaron-clinic-1.onrender.com';
+
+// Handle consultation request submission
+async function submitConsultationForm(formData) {
+    console.log("Form Data:", formData); // Log the form data for debugging
+    alert("Form Data:"); // Log the form data for debugging
+    try {
+      // Send the request to the add user API
+      const response = await fetch(`${API_BASE_URL}/addUser`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
+      });
+  
+      const result = await response.json();
+      if (response.ok) {
+        alert(`The consultation request has been successfully submitted! User ID: ${result.userId}`);
+
+      } else {
+        alert(`Error: ${result.error}`);
+      }
+    } catch (error) {
+        console.error('Error while sending the consultation request:', error);
+        alert('An error occurred while connecting to the server.');
+        
+    }
+  }
+  
+
 $(document).ready(function () {
-    $(".headerShared").load("/header.html", function () {
+    $(".headerShared").load("/header.html");
+    $(".navbarShared").load("/navbar.html", function () {
         console.log("✅ الهيدر تم تحميله.");
 
-        $(".headerShared").css({
-            // "position": "sticky",
-            // "top": "0",
+        $(".navbarShared").css({
+            "position": "sticky",
+            "top": "0",
             "z-index": "200",
-            "min-height": "60px"
+            "min-height": "60px",
+            "background": "white"
         });
         runApp(); // تشغيل `app.js` بعد تحميل الهيدر
     });
-    $(".consultationFormShared").load("/consultation-form.html");
+
+    $('.consultationFormShared').load('consultation-form.html', function () {
+        console.log("Consultation form loaded.");
+    
+        // الآن أضف event listener بعد تحميل الفورم
+        const form = document.querySelector('#consultationForm');
+        if (form) {
+          form.addEventListener('submit', function (event) {
+            event.preventDefault();
+    
+            const formData = {
+              fullName: document.querySelector('#consultationfullName').value,
+              email: document.querySelector('#consultationemail').value,
+              phone: document.querySelector('#consultationphone').value,
+              additionalInfo: document.querySelector('#consultationadditionalInfo').value,
+            };
+    
+            submitConsultationForm(formData);
+          });
+        } else {
+          console.error("Form not found after load.");
+        }
+      });
+
+
     $(".cookiesShared").load("/cookies-banner.html");
     $(".footerShared").load("/footer.html");
 

@@ -210,45 +210,50 @@ document.querySelector('#appointmentForm').addEventListener('submit', function (
 });
 
 
-// Handle consultation request submission
-async function submitConsultationForm(formData) {
-    try {
-      // Send the request to the add user API
-      const response = await fetch(`${API_BASE_URL}/addUser`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData),
-      });
+// // Handle consultation request submission
+// async function submitConsultationForm(formData) {
+//     console.log("Form Data:", formData); // Log the form data for debugging
+//     alert("Form Data:"); // Log the form data for debugging
+//     try {
+//       // Send the request to the add user API
+//       const response = await fetch(`${API_BASE_URL}/addUser`, {
+//         method: 'POST',
+//         headers: { 'Content-Type': 'application/json' },
+//         body: JSON.stringify(formData),
+//       });
   
-      const result = await response.json();
-      if (response.ok) {
-        alert(`The consultation request has been successfully submitted! User ID: ${result.userId}`);
+//       const result = await response.json();
+//       if (response.ok) {
+//         alert(`The consultation request has been successfully submitted! User ID: ${result.userId}`);
 
-      } else {
-        alert(`Error: ${result.error}`);
-      }
-    } catch (error) {
-        console.error('Error while sending the consultation request:', error);
-        alert('An error occurred while connecting to the server.');
+//       } else {
+//         alert(`Error: ${result.error}`);
+//       }
+//     } catch (error) {
+//         console.error('Error while sending the consultation request:', error);
+//         alert('An error occurred while connecting to the server.');
         
-    }
-  }
+//     }
+//   }
   
-  // Handle consultation form submission
-  document.querySelector('#consultationForm').addEventListener('submit', function (event) {
-    event.preventDefault();
+//   // Handle consultation form submission
+//   document.querySelector('#consultationForm').addEventListener('submit', function (event) {
+
+//     alert("###Form Data:"); // Log the form data for debugging
+
+//     event.preventDefault();
   
-    // جمع بيانات الفورم
-    const formData = {
-      fullName: document.querySelector('#consultationfullName').value,
-      email: document.querySelector('#consultationemail').value,
-      phone: document.querySelector('#consultationphone').value,
-      contactMethod: document.querySelector('#consultationcontactMethod').value,
-      consultationType: document.querySelector('#consultationconsultationType').value,
-      additionalInfo: document.querySelector('#consultationadditionalInfo').value,
-    };
+//     // جمع بيانات الفورم
+//     const formData = {
+//       fullName: document.querySelector('#consultationfullName').value,
+//       email: document.querySelector('#consultationemail').value,
+//       phone: document.querySelector('#consultationphone').value,
+//       contactMethod: document.querySelector('#consultationcontactMethod').value,
+//       consultationType: document.querySelector('#consultationconsultationType').value,
+//       additionalInfo: document.querySelector('#consultationadditionalInfo').value,
+//     };
   
-    // إرسال البيانات إلى السيرفر
-    submitConsultationForm(formData);
-  });
+//     // إرسال البيانات إلى السيرفر
+//     submitConsultationForm(formData);
+//   });
 
