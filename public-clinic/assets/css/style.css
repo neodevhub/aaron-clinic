@@ -1,3 +1,5 @@
+/** @format */
+
 body {
   /* font-family: Arial, sans-serif; */
   font-family: var(--primary-font-family) !important;
@@ -6,7 +8,7 @@ body {
 }
 
 header {
-  background-color:var(--primary-color) !important;
+  background-color: var(--primary-color) !important;
   color: var(--primary-font-color) !important;
 }
 
@@ -21,7 +23,7 @@ button {
 
 .top-header,
 .menu-bar {
-  background-color:var(--primary-color) !important;
+  background-color: var(--primary-color) !important;
   /* #00a791 !important */
 }
 
@@ -52,10 +54,14 @@ button.btn.btn-primary {
 
 a.btn.btn-primary {
   background: var(--primary-color);
-  border-color:var(--primary-color);
+  border-color: var(--primary-color);
 }
 
-.btn-check:checked+.btn, .btn.active, .btn.show, .btn:first-child:active, :not(.btn-check)+.btn:active {
+.btn-check:checked + .btn,
+.btn.active,
+.btn.show,
+.btn:first-child:active,
+:not(.btn-check) + .btn:active {
   color: var(--bs-btn-active-color);
   background-color: #bd5802;
   border-color: #bd5802;
@@ -96,7 +102,6 @@ a.btn.btn-primary {
   border-radius: 6px;
 }
 
-
 .appointment-form {
   position: absolute;
   top: 50%;
@@ -125,11 +130,6 @@ a.btn.btn-primary {
   margin-top: 10px;
   border-radius: 6px;
 }
-
-
-
-
-
 
 .carousel-caption {
   bottom: 21.25rem;
@@ -252,7 +252,6 @@ a.btn.btn-primary {
 .clinic-info .carousel {
   /* height: 100%; */
   height: 94%;
-
 }
 
 .clinic-info .carousel-inner {
@@ -349,7 +348,7 @@ footer ul.list-inline li {
 
 footer.bg-dark.text-white.pt-5.pb-3 {
   /* background-color: rgb(4 104 121) !important */
-  background-color:var(--primary-color) !important;
+  background-color: var(--primary-color) !important;
 }
 
 /* .subcategory-row {
@@ -371,15 +370,15 @@ footer.bg-dark.text-white.pt-5.pb-3 {
   margin-left: unset !important;
 }
 
- /* جعل لون الخلفية الأبيض عند hover يغطي كامل ارتفاع الـ nav */
- .menu-bar .nav-link {
+/* جعل لون الخلفية الأبيض عند hover يغطي كامل ارتفاع الـ nav */
+.menu-bar .nav-link {
   transition: background 0.3s, color 0.3s;
   padding: 15px 20px; /* تكبير المساحة */
 }
 
 .menu-bar .nav-item:hover .nav-link {
   background: white !important;
-  color: #43a047 !important;
+  color: dark blue !important;
   height: 100%; /* تأكد من تعبئة الـ nav */
   display: block;
   /* font-weight: bold; */
@@ -406,7 +405,7 @@ footer.bg-dark.text-white.pt-5.pb-3 {
 .submenu li a {
   text-decoration: none;
   color: black;
-background: #f1f1f100;
+  background: #f1f1f100;
   display: block;
 }
 
@@ -486,7 +485,7 @@ img.card-img-top {
 }
 
 .cookie-banner button {
-  background: #4CAF50;
+  background: #4caf50;
   color: white;
   border: none;
   padding: 5px 10px;
