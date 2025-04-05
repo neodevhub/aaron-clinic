@@ -14,7 +14,7 @@ router.get('/nav/section', async (req, res) => {
     try {
         // العثور على جميع الأقسام المنشورة
         const sections = await SectionNew.find({ status: 'Published' }).select('sectionId title categories');
-        
+
         // إذا كانت الأقسام موجودة
         if (!sections || sections.length === 0) {
             return res.status(404).json({ message: 'No sections found' });
@@ -32,33 +32,35 @@ router.get('/nav/section', async (req, res) => {
 
 router.get('/navstatic/section', async (req, res) => {
     try {
-      const staticSections = [
-        { title: 'Equipo', page:'team', i18next:'team', categories: [] },
-        { title: 'Patologías', page:'pathologies', i18next:'pathologies', categories: [] },
-        { title: 'Tratamientos', page:'treatments', i18next:'treatments', categories: [] },
-        { title: 'Peritaje Médico-Legal', page:'medical-legal-expertise', i18next:'medical_legal_expertise', categories: [] },
-        { title: 'Información y Consejos', page:'information-advice', i18next:'information_and_advice', categories: [] },
-        { title: 'Contacto',page:'contact',  i18next:'contact', categories: [] }
-      ];
-  
-      
-      const sections = await SectionNew.find({ status: 'Published' }).select('sectionId title categories');
-      
-      staticSections.forEach(staticSection => {
-        const match = sections.find(section => section.title.es.toLowerCase().includes(staticSection.title.toLowerCase()));
-        if (match) {
+        const staticSections = [
+            { title: 'Inicio', page: 'index', description: '', i18next: 'home', categories: [] },
+            { title: 'Equipo', page: 'team', description: 'Equipo', i18next: 'team', categories: [] },
+            { title: 'Patologías', page: 'pathologies', description: 'Los síntomas y patologías más comues de la columna vertebral', i18next: 'pathologies', categories: [] },
+            { title: 'Tratamientos', page: 'treatments', description: 'Tratamientos', i18next: 'treatments', categories: [] },
+            { title: 'Peritaje Médico-Legal', page: 'medical-legal-expertise', description: 'Peritaje Médico-Legal', i18next: 'medical_legal_expertise', categories: [] },
+            { title: 'Información y Consejos', page: 'information-advice', description: 'Información y Consejos', i18next: 'information_and_advice', categories: [] },
+            { title: 'Contacto', page: 'contact', description: 'Contacto', i18next: 'contact', categories: [] }
+        ];
 
-          staticSection.sectionId = match.sectionId;
-          staticSection.categories = match.categories;
-        }
-      });
-  
-      res.json(staticSections); // إرسال الأقسام مع الفئات
+
+        const sections = await SectionNew.find({ status: 'Published' }).select('sectionId title categories');
+
+        staticSections.forEach(staticSection => {
+            console.log("staticSection", staticSection);
+            const match = sections.find(section => section.title.es.toLowerCase().includes(staticSection.title.toLowerCase()));
+            if (match) {
+
+                staticSection.sectionId = match.sectionId;
+                staticSection.categories = match.categories;
+            }
+        });
+
+        res.json(staticSections); // إرسال الأقسام مع الفئات
     } catch (error) {
-      console.error(error);
-      res.status(500).json({ message: 'Error loading sections.' });
+        console.error(error);
+        res.status(500).json({ message: 'Error loading sections.' });
     }
-  });
+});
 
 //DASHBOARD PUBLIC API 
 
@@ -136,9 +138,9 @@ router.get('/section/:sectionId/categories', async (req, res) => {
 router.get('/section/:sectionId/category/:categoryId', async (req, res) => {
     try {
         const { sectionId, categoryId } = req.params;
-        
+
         const section = await SectionNew.findOne({ sectionId: sectionId });
-        
+
         if (!section) return res.status(404).json({ error: 'Section not found' });
 
         const category = section.categories.find(cat => cat.categoryId.toString() === req.params.categoryId);
@@ -339,7 +341,7 @@ router.put('/section/:sectionId', verifyToken, async (req, res) => {
     try {
         const { sectionId } = req.params;
         const updatedData = req.body;
-        
+
         // Update the section using sectionId
         const section = await SectionNew.findOneAndUpdate(
             { sectionId },
