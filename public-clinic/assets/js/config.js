@@ -38,7 +38,7 @@ $(document).ready(function () {
         $(".navbarShared").css({
             "position": "sticky",
             "top": "0",
-            "z-index": "200",
+            "z-index": "30000",
             "min-height": "60px",
             "background": "white"
         });
@@ -217,33 +217,33 @@ function updateLanguageButton(selectedLang) {
     $("#selectedLang").text(langText[selectedLang] || "Espanol");
 }
 
-function autoTranslation(selectedLang) {
-    alert("Auto translation started for language: " + selectedLang);
-    var targetLang = selectedLang;
+// function autoTranslation(selectedLang) {
+//     alert("Auto translation started for language: " + selectedLang);
+//     var targetLang = selectedLang;
 
-    $(".translatable").each(function () {
-        var element = $(this);
-        var originalText = element.text();
+//     $(".translatable").each(function () {
+//         var element = $(this);
+//         var originalText = element.text();
 
-        $.ajax({
-            url: "https://libretranslate.de/translate",
-            type: "POST",
-            data: {
-                q: originalText,
-                source: "auto",
-                target: targetLang,
-                format: "text",
-                api_key: "" // قد تحتاج مفتاح API إذا كان الخادم يطلب ذلك
-            },
-            success: function (response) {
-                element.text(response.translatedText);
-            },
-            error: function (error) {
-                console.error("خطأ في الترجمة:", error);
-            }
-        });
-    });
-}
+//         $.ajax({
+//             url: "https://libretranslate.de/translate",
+//             type: "POST",
+//             data: {
+//                 q: originalText,
+//                 source: "auto",
+//                 target: targetLang,
+//                 format: "text",
+//                 api_key: "" // قد تحتاج مفتاح API إذا كان الخادم يطلب ذلك
+//             },
+//             success: function (response) {
+//                 element.text(response.translatedText);
+//             },
+//             error: function (error) {
+//                 console.error("خطأ في الترجمة:", error);
+//             }
+//         });
+//     });
+// }
 
 function setupEventListeners() {
     $(document).on("click", ".change-lang", function (e) {
@@ -265,7 +265,7 @@ function changeLanguage(selectedLang) {
     i18next.changeLanguage(selectedLang, function (err) {
         if (err) return console.error("Error changing language:", err);
         updateContent();
-        autoTranslation(selectedLang);
+        // autoTranslation(selectedLang);
         updateLanguageButton(selectedLang);
         localStorage.setItem("selectedLang", selectedLang);
     });
