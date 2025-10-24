@@ -325,7 +325,6 @@ function loadCalendar() {
           events: events,
           eventClick: function (info) {
             console.log("Event Details:", info.event);
-            console.log("Appointment Details:", info.event.extendedProps);
 
             let currentId = info.event.extendedProps.id;
             let currentDate = info.event.extendedProps.date;

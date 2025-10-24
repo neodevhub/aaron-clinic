@@ -87,7 +87,7 @@ async function fetchAppointments() {
         const appointments = await response.json();
         
         // طباعة البيانات المسترجعة للتحقق من تنسيقها
-        console.log("Appointments:", appointments);
+        // console.log("Appointments:", appointments);
 
         // التحقق من أن المواعيد تحتوي على تاريخ ووقت صحيحين
         const validAppointments = appointments.filter(appointment => {
@@ -169,6 +169,31 @@ document.addEventListener('DOMContentLoaded', () => {
     updateCalendar();
 });
 
+
+function showModal(title, message, type = 'success') {
+    const modalTitle = document.getElementById('modalTitle');
+    const modalMessage = document.getElementById('modalMessage');
+    const modalIcon = document.getElementById('modalIcon');
+
+    modalTitle.textContent = title;
+    modalMessage.textContent = message;
+
+    // أيقونة حسب نوع الرسالة
+    if (type === 'success') {
+        modalIcon.innerHTML = '✅'; // أيقونة صح
+        modalIcon.style.color = 'green';
+    } else {
+        modalIcon.innerHTML = '❌'; // أيقونة خطأ
+        modalIcon.style.color = 'red';
+    }
+
+    // اظهار المودال
+    const modalEl = document.getElementById('bookingModal');
+    const modal = new bootstrap.Modal(modalEl);
+    modal.show();
+}
+
+
 // Send appointment booking request
 async function bookAppointment(formData) {
     try {
@@ -179,17 +204,28 @@ async function bookAppointment(formData) {
         });
 
         const result = await response.json();
-        if (response.ok) {
-            alert(`The appointment has been successfully booked! Appointment ID: ${result.appointmentId}`);
 
+        if (response.ok) {
+            showModal(
+                'Success!',
+                `The appointment has been successfully booked!`,
+                'success'
+            );
+
+            //  showModal(
+            //     'Success!',
+            //     `The appointment has been successfully booked! Appointment ID: ${result.appointmentId}`,
+            //     'success'
+            // );
         } else {
-            alert(`Error: ${result.error}`);
+            showModal('Error', `Error: ${result.error}`, 'error');
         }
     } catch (error) {
         console.error('Error booking appointment:', error);
-        alert('An error occurred while connecting to the server.');
+        showModal('Error', 'An error occurred while connecting to the server.', 'error');
     }
 }
+
 
 // Handle form submission
 document.querySelector('#appointmentForm').addEventListener('submit', function (event) {
@@ -212,7 +248,6 @@ document.querySelector('#appointmentForm').addEventListener('submit', function (
 
 // // Handle consultation request submission
 // async function submitConsultationForm(formData) {
-//     console.log("Form Data:", formData); // Log the form data for debugging
 //     alert("Form Data:"); // Log the form data for debugging
 //     try {
 //       // Send the request to the add user API

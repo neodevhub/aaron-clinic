@@ -21,6 +21,7 @@
         "pathologies": "الأمراض",
         "treatments": "العلاجات",
         "medical_legal_expertise": "الخبرة الطبية القانونية",
+        "information_and_advice": "معلومات ونصائح",
         "contact": "اتصل بنا",
         "user_name": "اسم المستخدم",
         "dashboard": "لوحة القيادة",
@@ -79,6 +80,7 @@
         "google_reviews": "شاهد تقييماتنا على جوجل",
         "copyright": "2025 بيزيوندو. جميع الحقوق محفوظة.",
         "links": "روابط",
-        "enter_name": "أدخل اسمك"
+        "enter_name": "أدخل اسمك",
+        "home": "الرئيسية"
 
 }

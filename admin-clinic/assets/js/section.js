@@ -56,20 +56,31 @@ $(document).ready(function () {
     let sectionId = $("#newSectionSelect").val();
 
     let newSectionTitle = $("#newSectionTitleEs").val();
+    let newSectionDescription = $("#newSectionDescriptionEs").val();
     let newSectionImage = $("#newSectionImage").val();
     let newCategoryTitle = $("#newCategoryTitleEs").val();
+    let newCategoryDescription = $("#newCategoryDescriptionEs").val();
     let newCategoryImage = $("#newCategoryImage").val();
+
+    let newCategoryToolTipTitle = $("#newCategoryToolTipTitleEs").val();
+    let newCategoryToolTipDescription = $("#newCategoryToolTipDescriptionEs").val();
+    let newCategoryToolTipImage = $("#newCategoryToolTipImage").val();
+
+
     let newCategoryContent = $("#newCategoryContentEs").val();
 
     if (!sectionId && newSectionTitle) {
       // 🟢 Create a new section with a category and subcategory
       const sectionData = {
         title: { es: newSectionTitle },
+        description: { es: newSectionDescription },
         imageUrl: newSectionImage,
       };
 
       const categoryData = {
         title: { es: newCategoryTitle },
+        description: { es: newCategoryDescription },
+        toolTip: { title: { es: newCategoryToolTipTitle }, description: { es: newCategoryToolTipDescription }, imageUrl: newCategoryToolTipImage },
         imageUrl: newCategoryImage,
         content: { es: newCategoryContent },
       };
@@ -81,6 +92,8 @@ $(document).ready(function () {
 
       const categoryData = {
         title: { es: newCategoryTitle },
+        description: { es: newCategoryDescription },
+        toolTip: { title: { es: newCategoryToolTipTitle }, description: { es: newCategoryToolTipDescription }, imageUrl: newCategoryToolTipImage },
         imageUrl: newCategoryImage,
         content: { es: newCategoryContent }
       };
@@ -93,12 +106,12 @@ $(document).ready(function () {
 
   //NEW HANDLE FOR SECTION
   function hideNewNewSectionInputs() {
-    $("#newSectionTitleEs, #newSectionImage").val("").removeAttr("required").parent().hide();
+    $("#newSectionTitleEs, newSectionDescriptinEs, #newSectionImage").val("").removeAttr("required").parent().hide();
   }
 
   //NEW HANDLE FOR SECTION
   function showNewSectionInputs() {
-    $("#newSectionTitleEs, #newSectionImage").attr("required", "required").parent().show();
+    $("#newSectionTitleEs, newSectionDescriptinEs, #newSectionImage").attr("required", "required").parent().show();
   }
 
 });
@@ -128,10 +141,13 @@ function viewNewCategories(sectionId, sectionTitle) {
         categoriesHTML += `
           <div class="col-lg-3 mb-4">
             <div class="card">
-              <img style="max-height: 218px;" src="${category.imageUrl || 'default-image.jpg'}" class="card-img-top" alt="${category.title?.es || category.title?.en || "category img"}">
+              <img style="max-height: 110px;max-width: 110px;" src="${category.imageUrl || 'default-image.jpg'}" class="card-img-top" alt="${category.title?.es || category.title?.en || "category img"}">
               <div class="card-body">
-                <h5 class="card-title">${category.title?.es || category.title?.en || "category title"}</h5>
-                
+                <strong class="card-title">${category.title?.es || category.title?.en || "category title"}</strong><br />
+                <small class="card-title">${category.description?.es || category.description?.en || "category description"}</small>
+                <small class="card-title">${category.toolTip?.description?.es || category.toolTip?.description?.en || "category description"}</small>
+                <img style="max-height: 110px;max-width: 110px;" src="${category.toolTip?.imageUrl || 'default-image.jpg'}" class="card-img-top" alt="${category.title?.es || category.title?.en || "category img"}">
+                <br />
                 <button class="btn btn-primary btn-sm" onclick="viewCategoryContent('${encodedData}', '${sectionId}','${sectionTitle}')">Read More</button>
                 
                 <button class="btn btn-warning btn-sm" onclick="newOpenEditPopup('category', '${sectionId}', ${safeCategoryData})">Edit</button>
@@ -170,7 +186,7 @@ function decodeBase64(str) {
 }
 
 
-function viewCategoryContent(encodedData, sectionId, sectionTitle) {
+function viewCategoryContent(encodedData, sectionId, sectionTitle, sectionDescription) {
   let category = JSON.parse(decodeBase64(encodedData)); // ✅ Decode Base64 with UTF-8 support
   let contentHTML = `
   <nav aria-label="breadcrumb">
@@ -189,6 +205,9 @@ function viewCategoryContent(encodedData, sectionId, sectionTitle) {
   </ol>
 </nav>
     <h3>${category.title?.es || category.title?.en || "subcategory title"}</h3>
+    <h5>${category.description?.es || category.description?.en || "subcategory description"}</h5>
+    <h6${category.toolTip?.description?.es || category.toolTip?.description?.en || "subcategory description"}</h5>
+
     <label for="languageSelect"><strong>Select Language:</strong></label>
     <select id="languageSelect" class="form-select" onchange="updateContent('${encodedData}')">
       <option value="ar" selected>العربية</option>
@@ -231,9 +250,10 @@ function newCreateSectionWithCategoryAndSubcategory(sectionData, categoryData) {
   // تحضير الفئة الجديدة مع الفئة الفرعية داخلها
   const newCategory = {
     title: { es: categoryData.title.es },
+    description: { es: categoryData.description.es },
     imageUrl: categoryData.imageUrl,
+    toolTip: { description: { es: categoryData.toolTip.description.es }, imageUrl: categoryData.toolTip.imageUrl },
     content: { es: categoryData.content.es }
-
   };
 
   // إضافة الفئة إلى بيانات القسم
@@ -273,8 +293,8 @@ function newCreateCategory(sectionId, data) {
       document.querySelectorAll('#addNewSectionForm input, #addNewSectionForm textarea').forEach(input => input.value = '');
       $('#addNewSectionModal').modal('hide');
       // loadNewCategories1(sectionId);
-        viewNewCategories(sectionId, data.title.es);
-      
+      viewNewCategories(sectionId, data.title.es);
+
     },
     error: function () {
       alert("Failed to add category.");
@@ -363,12 +383,28 @@ function newSectionToggleStatus(type, id, isChecked) {
 }
 
 function newOpenEditPopup(type, parentId, item) {
+  console.log("########### item", item)
   $('#newLblEditContentEs').hide();
   $('#newCategoryEditContentEs').hide();
+
+  $('#newLblEditToolTipTitleEs').hide();
+  $('#newLblEditToolTipDescriptionEs').hide();
+  $('#newLblEditToolTipImageUrl').hide();
+
+  $('#newEditToolTipTitleEs').hide();
+  $('#newEditToolTipDescriptionEs').hide();
+  $('#newEditToolTipImageUrl').hide();
+
+
+
   console.log("section popup", type, parentId, item);
   $('#newEditId').val(item._id || item.sectionId || item.categoryId || item.subcategoryId);
   $('#newEditType').val(type);
   $('#newEditTitleEs').val(item.title?.es || item.title?.en || '');
+  $('#newEditDescriptionEs').val(item.description?.es || item.description?.en || '');
+
+
+
   $('#newEditImageUrl').val(item.imageUrl);
 
   if (type == "category") {
@@ -376,6 +412,18 @@ function newOpenEditPopup(type, parentId, item) {
     $('#newLblEditContentEs').show();
     $('#newCategoryEditContentEs').show();
     $('#newCategoryEditContentEs').val(item.content?.es || item.content?.en || '');
+
+    $('#newLblEditToolTipTitleEs').show();
+    $('#newLblEditToolTipDescriptionEs').show();
+    $('#newLblEditToolTipImageUrl').show();
+
+    $('#newEditToolTipTitleEs').show();
+    $('#newEditToolTipDescriptionEs').show();
+    $('#newEditToolTipImageUrl').show();
+
+    $('#newEditToolTipTitleEs').val(item.toolTip?.title?.es || item.toolTip?.title?.en || '');
+    $('#newEditToolTipDescriptionEs').val(item.toolTip?.description?.es || item.toolTip?.description?.en || '');
+    $('#newEditToolTipImageUrl').val(item.toolTip?.imageUrl || '');
   }
   $('#newEditPopup').modal('show');
   // Store parentId to use it in the update if the edit is on a category or subcategory
@@ -393,6 +441,8 @@ function newSaveChanges() {
 
   const updatedData = {
     title: { es: $('#newEditTitleEs').val() },
+    description: { es: $('#newEditDescriptionEs').val() },
+    toolTip: { title: { es: $('#newEditToolTipTitleEs').val() }, description: { es: $('#newEditToolTipDescriptionEs').val() }, imageUrl: $('#newEditToolTipImageUrl').val() },
     imageUrl: $('#newEditImageUrl').val()
   };
   if (type == "category") {
@@ -442,7 +492,7 @@ function loadNewSections() {
 
       let sectionsHTML = '<nav aria-label="breadcrumb"><ol id="sectionsBreadcrumb" class="breadcrumb"><li class="breadcrumb-item active" aria-current="page">Sections</li></ol></nav><button type="button" class="btn btn-primary add-float" data-bs-toggle="modal" data-bs-target="#addNewSectionModal">Add New Section </button><div class="row">';
 
-      
+
       $('#content').html(sectionsHTML);
       console.log(response);
       response.forEach(section => {

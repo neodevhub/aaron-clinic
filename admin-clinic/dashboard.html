@@ -75,7 +75,8 @@
                 <button class="btn btn-sm btn-outline-light" id="sidebarClose"><i class="fas fa-times"></i></button>
             </div>
             <ul class="list-unstyled">
-                <li><a href="#" class="sidebar-link" id="dashboardLink"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+                <li><a href="#" class="sidebar-link" id="dashboardLink"><i class="fas fa-tachometer-alt"></i>
+                        Dashboard</a>
                 <li><a href="#" class="sidebar-link" id="usersLink"><i class="fas fa-users"></i> Users</a></li>
                 <li><a href="#" class="sidebar-link" id="patientsLink"><i class="fas fa-user-injured"></i> Patients</a>
                 </li>
@@ -90,13 +91,13 @@
 
             </ul>
             <!-- <button class="btn btn-success w-100 my-3" id="addArticleBtn"><i class="fas fa-plus"></i> Add new
-                article</button> -->
-            <!-- <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addSectionModal">
+                article</button>
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addSectionModal">
                 Add New Section
             </button> -->
-            <!-- <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addNewSectionModal">
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addNewSectionModal">
                 Add New Section
-            </button> -->
+            </button>
         </div>
 
         <!-- Page Content -->
@@ -110,7 +111,7 @@
     </div>
 
     <div class="modal fade" id="viewArticlePopup" tabindex="-1" aria-labelledby="articleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
+        <div class="modal-dialog modal-xl">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="articleModalLabel">Article Details</h5>
@@ -124,7 +125,7 @@
     </div>
 
     <div id="editArticlePopup" class="modal fade" tabindex="-1">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-xl">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">Edit Article</h5>
@@ -209,7 +210,7 @@
     <!-- Modal for Adding Article -->
     <div class="modal fade" id="addArticlePopup" tabindex="-1" aria-labelledby="addArticlePopupLabel"
         aria-hidden="true">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-xl">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="addArticlePopupLabel">Add New Article</h5>
@@ -306,8 +307,8 @@
 
     <!-- Modal for Adding a New Section -->
     <div class="modal fade" id="addSectionModal" tabindex="-1" aria-labelledby="addSectionModalLabel"
-        aria-hidden="true" >
-        <div class="modal-dialog modal-lg">
+        aria-hidden="true">
+        <div class="modal-dialog modal-xl">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="addSectionModalLabel">Add New Section</h5>
@@ -326,6 +327,8 @@
                             <label class="form-label">Add a New Section</label>
                             <input type="text" id="sectionTitleEs" class="form-control mt-2"
                                 placeholder="Title in Spanish">
+                            <input type="text" id="sectionDescriptionEs" class="form-control mt-2"
+                                placeholder="Description in Spanish">
                             <input type="url" id="sectionImage" class="form-control mt-2"
                                 placeholder="Section Image URL">
                         </div>
@@ -361,7 +364,8 @@
                                 placeholder="Content in Spanish" required></textarea> -->
 
                             <!-- #editor-container' -->
-                            <textarea id="subCategoryContentEs" class="form-control mt-2" placeholder="Content in Spanish"></textarea>
+                            <textarea id="subCategoryContentEs" class="form-control mt-2"
+                                placeholder="Content in Spanish"></textarea>
                         </div>
 
                         <div class="modal-footer">
@@ -377,7 +381,7 @@
 
 
     <div id="editPopup" class="modal fade" tabindex="-1">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-xl">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">Edit</h5>
@@ -399,12 +403,13 @@
                         </div>
 
                         <div class="mb-3">
-                            <label id="lblEditContentEs" for="editContentEs" class="form-label">Content (Spanish)</label>
+                            <label id="lblEditContentEs" for="editContentEs" class="form-label">Content
+                                (Spanish)</label>
                             <textarea id="subCategoryEditContentEs" class="form-control mt-2"
                                 placeholder="Content in Spanish"></textarea>
                         </div>
 
-                        
+
 
 
                         <button type="button" class="btn btn-primary" onclick="saveChanges()">Load</button>
@@ -416,88 +421,151 @@
 
 
 
-<!-- Modal for Edit Section, category -->
-<div id="newEditPopup" class="modal fade" tabindex="-1">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Edit</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-            </div>
-            <div class="modal-body">
-                <form id="newEditForm">
-                    <input type="hidden" id="newEditId">
-                    <input type="hidden" id="newEditType">
+    <!-- Modal for Edit Section, category -->
+    <div id="newEditPopup" class="modal fade" tabindex="-1">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Edit</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="newEditForm">
+                        <input type="hidden" id="newEditId">
+                        <input type="hidden" id="newEditType">
 
-                    <div class="mb-3">
-                        <label for="newEditTitleEs" class="form-label">Title (Spanish)</label>
-                        <input type="text" id="newEditTitleEs" class="form-control">
-                    </div>
+                        <div class="row">
+                            <div class="mb-3 col-4">
+                                <label for="newEditTitleEs" class="form-label">Title (Spanish)</label>
+                                <input type="text" id="newEditTitleEs" class="form-control">
+                            </div>
 
-                    <div class="mb-3">
-                        <label for="newEditImageUrl" class="form-label">Image URL</label>
-                        <input type="text" id="newEditImageUrl" class="form-control">
-                    </div>
+                            <div class="mb-3 col-4">
+                                <label for="newEditDescriptionEs" class="form-label">Description (Spanish)</label>
+                                <input type="text" id="newEditDescriptionEs" class="form-control">
+                            </div>
 
-                    <div class="mb-3">
-                        <label id="newLblEditContentEs" for="newEditContentEs" class="form-label">Content (Spanish)</label>
-                        <textarea id="newCategoryEditContentEs" class="form-control mt-2"
-                            placeholder="Content in Spanish"></textarea>
-                    </div>
+                            <div class="mb-3 col-4">
+                                <label for="newEditImageUrl" class="form-label">Image URL</label>
+                                <input type="text" id="newEditImageUrl" class="form-control">
+                            </div>
 
-                    
-
-
-                    <button type="button" class="btn btn-primary" onclick="newSaveChanges()">Load</button>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
+                        </div>
 
 
 
-<!-- Modal for Adding a New Section -->
-<div class="modal fade" id="addNewSectionModal" tabindex="-1" aria-labelledby="addNewSectionModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="addNewSectionModalLabel">Add New Section</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form id="addNewSectionForm">
-                    <!-- Select or Add a Section -->
-                    <div class="mb-3">
-                        <label for="newSectionSelect" class="form-label">Select an Existing Section</label>
-                        <select id="newSectionSelect" class="form-select">
-                            <option value="">Choose a section...</option>
-                        </select>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Add a New Section</label>
-                        <input type="text" id="newSectionTitleEs" class="form-control mt-2" placeholder="Title in Spanish">
-                        <input type="url" id="newSectionImage" class="form-control mt-2" placeholder="Section Image URL">
-                    </div>
 
-                    <!-- Select or Add a Category -->
-                    <div class="mb-3">
-                        <label class="form-label">Add a New Category</label>
-                        <input type="text" id="newCategoryTitleEs" class="form-control mt-2" placeholder="Title in Spanish">
-                        <input type="url" id="newCategoryImage" class="form-control mt-2" placeholder="Category Image URL">
-                        <textarea id="newCategoryContentEs" class="form-control mt-2"
-                        placeholder="Content in Spanish"></textarea>
-                    </div>
 
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-success">Save</button>
-                    </div>
-                </form>
+                        <div class="row">
+
+                            <div class="mb-3 col-4">
+                                <label id="newLblEditToolTipTitleEs" for="newEditToolTipTitleEs"
+                                    class="form-label">ToolTip
+                                    Title (Spanish)</label>
+                                <input type="text" id="newEditToolTipTitleEs" class="form-control">
+                            </div>
+
+                            <div class="mb-3 col-4">
+                                <label id="newLblEditToolTipDescriptionEs" for="newEditToolTipDescriptionEs"
+                                    class="form-label">ToolTip Description (Spanish)</label>
+                                <input type="text" id="newEditToolTipDescriptionEs" class="form-control">
+                            </div>
+
+                            <div class="mb-3 col-4">
+                                <label id="newLblEditToolTipImageUrl" for="newEditToolTipImageUrl"
+                                    class="form-label">ToolTip Image URL</label>
+                                <input type="text" id="newEditToolTipImageUrl" class="form-control">
+                            </div>
+                        </div>
+
+
+
+
+
+                        <div class="mb-3">
+                            <label id="newLblEditContentEs" for="newEditContentEs" class="form-label">Content
+                                (Spanish)</label>
+                            <textarea id="newCategoryEditContentEs" class="form-control mt-2"
+                                placeholder="Content in Spanish"></textarea>
+                        </div>
+
+
+
+
+                        <button type="button" class="btn btn-primary" onclick="newSaveChanges()">Load</button>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
-</div>
+
+
+
+    <!-- Modal for Adding a New Section -->
+    <div class="modal fade" id="addNewSectionModal" tabindex="-1" aria-labelledby="addNewSectionModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addNewSectionModalLabel">Add New Section</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="addNewSectionForm">
+                        <!-- Select or Add a Section -->
+                        <div class="mb-3">
+                            <label for="newSectionSelect" class="form-label">Select an Existing Section</label>
+                            <select id="newSectionSelect" class="form-select">
+                                <option value="">Choose a section...</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Add a New Section</label>
+                            <input type="text" id="newSectionTitleEs" class="form-control mt-2"
+                                placeholder="Title in Spanish">
+                            <input type="text" id="newSectionDescriptionEs" class="form-control mt-2"
+                                placeholder="Description in Spanish">
+                            <input type="url" id="newSectionImage" class="form-control mt-2"
+                                placeholder="Section Image URL">
+                        </div>
+
+                        <!-- Select or Add a Category -->
+                        <div class="mb-3">
+                            <label class="form-label">Add a New Category</label>
+
+
+                            <input type="text" id="newCategoryTitleEs" class="form-control mt-2"
+                                placeholder="Title in Spanish">
+                            <input type="text" id="newCategoryDescriptionEs" class="form-control mt-2"
+                                placeholder="Description in Spanish">
+                            <input type="url" id="newCategoryImage" class="form-control mt-2"
+                                placeholder="Category Image URL">
+
+
+
+
+                            <input type="text" id="newCategoryToolTipTitleEs" class="form-control mt-2"
+                                placeholder="ToolTip Title in Spanish">
+                            <input type="text" id="newCategoryToolTipDescriptionEs" class="form-control mt-2"
+                                placeholder="ToolTip Description in Spanish">
+                            <input type="url" id="newCategoryToolTipImage" class="form-control mt-2"
+                                placeholder="Category ToolTip Image URL">
+
+
+
+                            <textarea id="newCategoryContentEs" class="form-control mt-2"
+                                placeholder="Content in Spanish"></textarea>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-success">Save</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 
 
 

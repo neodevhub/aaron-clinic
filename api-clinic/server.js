@@ -4,6 +4,7 @@ const MongoStore = require('connect-mongo');
 const cors = require('cors');
 const express = require('express');
 const bodyParser = require('body-parser');
+const geoip = require('geoip-lite');
 
 const redisClient = require("./config/redis");
 const getClinicSettings = require("./middleware/clinicMiddleware");
@@ -27,6 +28,7 @@ const Patient = require('./models/Patient');
 const Appointment = require('./models/Appointment');
 const Article = require('./models/Article');
 const Section = require('./models/Section');
+const Visit = require('./models/Visit');
 
 const app = express();
 app.use(cors()); // Enable CORS for all requests
@@ -258,16 +260,46 @@ app.post('/addYearAppointments', async (req, res) => {
   }
 });
 
+// // Request Consultation
+// app.post('/addUser', async (req, res) => {
+//   console.log("req.body", req.body);
+//   const { fullName, email, phone, additionalInfo } = req.body;
+
+//   if (!fullName || !email) {
+//     return res.status(400).json({ error: 'Please provide all required fields1111.' });
+//   }
+
+//   try {
+//     const user = new User({
+//       fullName,
+//       email,
+//       phone,
+//       additionalInfo: additionalInfo || '',
+//       createdAt: new Date(),
+//     });
+
+//     await user.save();
+//     res.status(200).json({ message: 'User added successfully!', userId: user._id });
+//   } catch (error) {
+//     console.error('Error adding user:', error);
+//     res.status(500).json({ error: 'An error occurred while adding the user' });
+//   }
+// });
+
+
+const nodemailer = require("nodemailer");
+
 // Request Consultation
 app.post('/addUser', async (req, res) => {
   console.log("req.body", req.body);
   const { fullName, email, phone, additionalInfo } = req.body;
 
   if (!fullName || !email) {
-    return res.status(400).json({ error: 'Please provide all required fields1111.' });
+    return res.status(400).json({ error: 'Please provide all required fields.' });
   }
 
   try {
+    // 1. حفظ البيانات في الداتابيس
     const user = new User({
       fullName,
       email,
@@ -277,12 +309,58 @@ app.post('/addUser', async (req, res) => {
     });
 
     await user.save();
-    res.status(200).json({ message: 'User added successfully!', userId: user._id });
+
+    // 2. إعداد transporter مع Outlook
+    const transporter = nodemailer.createTransport({
+      host: "smtp.office365.com",
+      port: 587,
+      secure: false, // لازم false مع port 587
+      auth: {
+        user: process.env.OUTLOOK_USER, // مثال: clinicaespaldasana@outlook.com
+        pass: process.env.OUTLOOK_PASS, // App Password من Outlook
+      },
+      logger: true, // يطبع logs للـ console
+      debug: true,  // يطبع تفاصيل SMTP
+      tls: {
+        ciphers: "SSLv3",
+        rejectUnauthorized: false, // جربي تشيليها لو السيرفر production
+      },
+    });
+
+    // 3. إعداد الإيميل
+    const mailOptions = {
+      from: `"${fullName}" <${process.env.OUTLOOK_USER}>`, // مهم يكون نفس الحساب
+      replyTo: email, // الرد يروح لإيميل اليوزر
+      to: process.env.OUTLOOK_USER, // إيميلك الرسمي (المستلم)
+      subject: "🔔 استشارة جديدة من الموقع",
+      html: `
+        <h3>تفاصيل الطلب:</h3>
+        <p><b>الاسم:</b> ${fullName}</p>
+        <p><b>الإيميل:</b> ${email}</p>
+        <p><b>الهاتف:</b> ${phone || '-'}</p>
+        <p><b>معلومات إضافية:</b> ${additionalInfo || '-'}</p>
+        <p><i>تم الإرسال بتاريخ: ${new Date().toLocaleString()}</i></p>
+      `,
+    };
+
+    // 4. إرسال الإيميل
+    await transporter.sendMail(mailOptions);
+
+    res.status(200).json({ 
+      message: 'User added successfully and email sent!', 
+      userId: user._id 
+    });
+
   } catch (error) {
-    console.error('Error adding user:', error);
+    console.error('❌ Error adding user or sending email:', error);
     res.status(500).json({ error: 'An error occurred while adding the user' });
   }
 });
+
+
+
+
+
 
 // // API to book an appointment
 // app.post('/bookAppointment', async (req, res) => {
@@ -639,6 +717,42 @@ app.get('/section/:sectionId/category/:categoryId/subcategory/:subcategoryId', a
 });
 
 
+//COOKIES
+// app.post("/api/track-visit", async (req, res) => {
+//   console.log("##################COOKIES");
+//   const { visitorId, language, page, eventType, duration } = req.body;
+
+//   if (!visitorId) return res.status(400).json({ message: "Missing visitorId" });
+
+//   await Visit.create({ visitorId, language, page, eventType, duration });
+//   res.json({ success: true });
+// });
+
+app.post("/api/track-visit", async (req, res) => {
+  console.log("##################COOKIES");
+  const { visitorId, language, page, eventType, duration } = req.body;
+
+  if (!visitorId) return res.status(400).json({ message: "Missing visitorId" });
+
+  // 1️⃣ جلب IP الزائر
+  const ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
+
+  // 2️⃣ الحصول على الدولة
+  const geo = geoip.lookup(ip);
+  const country = geo ? geo.country : "Unknown";
+
+  // 3️⃣ حفظ البيانات في MongoDB
+  await Visit.create({
+    visitorId,
+    language,
+    page,
+    eventType,
+    duration,
+    country
+  });
+
+  res.json({ success: true, country });
+});
 
 // 📌 Use the routes
 app.use("/api", clinicRoutes);

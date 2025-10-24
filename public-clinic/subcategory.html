@@ -30,22 +30,28 @@
 </head>
 
 <body>
-    <div class="consultationFormShared"></div>
+    <!-- <div class="consultationFormShared"></div> -->
     <div class="cookiesShared"></div>
     <div class="headerShared"></div>
     <div class="navbarShared" style="position: sticky !important;"></div>
 
 
-    <header id="subCategoryHeader" class="top-header text-white py-2 bg-primary" style="position: sticky; top: 159px !important; background: #327835 !important;">
+    <header id="subCategoryHeader" class="top-header text-white py-2 bg-primary" style="position: sticky; top: 152px !important; background: #204e22 !important; z-index: 1;">
         <div class="container d-flex justify-content-between align-items-center">
            
             <div>
                 <div class="d-flex align-items-center mb-1">
-                    <h3>Patologías y Síntomas</h3> <br>
+                    
+                    <h3 id="headerTitle">Patologías y Síntomas</h3> <br>
                 </div>
-                <div class="d-flex align-items-center">
+                <div class="d-flex align-items-center mb-1">
+
+                    <h5 id="headerDescription">Patologías y Síntomas</h5> <br>
+
+                </div>
+                <!-- <div class="d-flex align-items-center">
                     <span >Los síntomas y patologías más comues de la columna vertebral</span>
-                </div>
+                </div> -->
             </div>
         </div>
     </header>
@@ -67,6 +73,8 @@
 
     <script src="assets/js/app.js"></script>
     <script src="assets/js/api.js"></script>
+    <script src="assets/js/cookies.js"></script>
+
     <script>
 
         $(document).ready(function () {
@@ -76,12 +84,17 @@
             // const subcategoryId = urlParams.get('subcategoryId');
 
             if (sectionId && categoryId) {
-                console.log("####sectionId", sectionId);
-                console.log("####categoryId", categoryId);
                 loadSubcategoryDetails(sectionId, categoryId);
             } else {
                 console.error("Missing parameters in URL");
             }
+            
+            let headerTitle = localStorage.getItem("sectionTitle") || data.title[lang] || data.title['es'];
+            let headerDescription = localStorage.getItem("sectionDescription") || data.description[lang] || data.description['es'];
+
+
+            document.getElementById("headerTitle").innerHTML = headerTitle;
+            document.getElementById("headerDescription").innerHTML = headerDescription;
         });
 
         function loadSubcategoryDetails(sectionId, categoryId) {
@@ -91,9 +104,19 @@
                 url: `${API_BASE_URL}/newsection/section/${sectionId}/category/${categoryId}`,
                 method: 'GET',
                 success: function (data) {
-                    console.log("####data", data);
-
                     let htmlContent = data.content[lang] || data.content['es'];
+
+                    // let headerTitle= data.title[lang] || data.title['es'];
+
+
+
+
+
+
+    //   console.log("@@@@@header title", headerTitle);
+
+                    // document.getElementById("headerTitle").innerHTML = headerTitle;
+
                     document.getElementById("contentContainer").innerHTML = htmlContent;
 
 

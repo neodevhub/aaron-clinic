@@ -1,24 +1,24 @@
+// localStorage.setItem("selectedNavItem", "index");
 
 
 $(document).ready(function () {
+
 
   const urlParams = new URLSearchParams(window.location.search);
   const sectionId = urlParams.get('sectionId');
   const categoryId = urlParams.get('categoryId');
   if (sectionId && categoryId) {
-      console.log("####sectionId", sectionId);
-      console.log("####categoryId", categoryId);
-      loadSubcategoryDetails(sectionId, categoryId);
+    loadSubcategoryDetails(sectionId, categoryId);
   }
   else if (sectionId) {
-      if (typeof loadCategories === "function") {
-          loadCategories(sectionId);
-      } else {
-          console.error("Function loadCategories is not defined. Check if app.js is loaded.");
-      }
+    if (typeof loadCategories === "function") {
+      loadCategories(sectionId);
+    } else {
+      console.error("Function loadCategories is not defined. Check if app.js is loaded.");
+    }
   }
   else {
-      console.error("Section ID not found in URL");
+    console.error("Section ID not found in URL");
   }
 
 
@@ -64,117 +64,166 @@ $(document).ready(function () {
 
 
 
- // دالة للبحث عن الأقسام وعرضها في الـ Navbar
-//  function loadSections() {
-//   $.get(`${API_BASE_URL}/newsection/nav/section`, function (sections) {
-//       // تحديث navbar بالبيانات المأخوذة من الـ backend
-//       if (sections && Array.isArray(sections)) {
-//           const navList = $('#sectionsList');
-          
-//           sections.forEach(section => {
-//               const sectionTitle = section.title.es; // العنوان بالـ إسباني
-//               const categories = section.categories;
+  // دالة للبحث عن الأقسام وعرضها في الـ Navbar
+  //  function loadSections() {
+  //   $.get(`${API_BASE_URL}/newsection/nav/section`, function (sections) {
+  //       // تحديث navbar بالبيانات المأخوذة من الـ backend
+  //       if (sections && Array.isArray(sections)) {
+  //           const navList = $('#sectionsList');
 
-//               // إضافة قسم جديد
-//               const sectionItem = `
-//                   <li class="nav-item dropdown">
-//                       <a class="nav-link text-white dropdown-toggle" href="#" role="button" id="navbarDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-//                           ${sectionTitle}
-//                       </a>
-//                       <ul class="dropdown-menu submenu" aria-labelledby="navbarDropdown">
-//                           ${categories.map(cat => `
-//                               <li><a class="dropdown-item category-link" href="#" data-section-id="${section.sectionId}" data-category-id="${cat.categoryId}">${cat.title.es}</a></li>
-//                           `).join('')}
-//                       </ul>
-//                   </li>
-//               `;
-//               navList.append(sectionItem);
-//           });
+  //           sections.forEach(section => {
+  //               const sectionTitle = section.title.es; // العنوان بالـ إسباني
+  //               const categories = section.categories;
 
-//           // عندما ينقر المستخدم على فئة، انتقل إلى صفحة الفئة
-//           $('.category-link').click(function (e) {
-//               e.preventDefault();
-//               const sectionId = $(this).data('section-id');
-//               const categoryId = $(this).data('category-id');
+  //               // إضافة قسم جديد
+  //               const sectionItem = `
+  //                   <li class="nav-item dropdown">
+  //                       <a class="nav-link text-white dropdown-toggle" href="#" role="button" id="navbarDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+  //                           ${sectionTitle}
+  //                       </a>
+  //                       <ul class="dropdown-menu submenu" aria-labelledby="navbarDropdown">
+  //                           ${categories.map(cat => `
+  //                               <li><a class="dropdown-item category-link" href="#" data-section-id="${section.sectionId}" data-category-id="${cat.categoryId}">${cat.title.es}</a></li>
+  //                           `).join('')}
+  //                       </ul>
+  //                   </li>
+  //               `;
+  //               navList.append(sectionItem);
+  //           });
 
-//               window.location.href = `subcategory.html?sectionId=${sectionId}&categoryId=${categoryId}`;
-//           });
-//       }
-//   }).fail(function () {
-//       console.error("Error loading sections.");
-//   });
-// }
+  //           // عندما ينقر المستخدم على فئة، انتقل إلى صفحة الفئة
+  //           $('.category-link').click(function (e) {
+  //               e.preventDefault();
+  //               const sectionId = $(this).data('section-id');
+  //               const categoryId = $(this).data('category-id');
 
-// loadSections(); 
+  //               window.location.href = `subcategory.html?sectionId=${sectionId}&categoryId=${categoryId}`;
+  //           });
+  //       }
+  //   }).fail(function () {
+  //       console.error("Error loading sections.");
+  //   });
+  // }
+
+  // loadSections(); 
+  // localStorage.setItem("selectedNavItem", selectedNavItem);
 
 
 
-function loadSectionsStatic() {
-  $.get(`${API_BASE_URL}/newsection/navstatic/section`, function (sections) {
+
+
+  function loadSectionsStatic() {
+    $.get(`${API_BASE_URL}/newsection/navstatic/section`, function (sections) {
       // تحديث navbar بالبيانات المأخوذة من الـ backend
       if (sections && Array.isArray(sections)) {
-          const navList = $('#sectionsList');
-          
-          sections.forEach(section => {
-            console.log("^^^^^section", section);
-              const sectionTitle = section.title;  // العنوان بالـ إسباني أو بالعربي
-              const categories = section.categories;
-              //const i18nData = section.i18next;
-              // إضافة قسم جديد
-              const sectionItem = `
-                  <li class="nav-item dropdown">
-                      <a class="section-link nav-link text-white menu-link" href="#" data-page-name="${section.page}" data-section-id="${section.sectionId}" role="button" id="navbarDropdown" aria-expanded="false" data-i18n="${section.i18next}">
+        const navList = $('.sectionsList');
+
+        sections.forEach(section => {
+          const sectionTitle = section.title;  // العنوان بالـ إسباني أو بالعربي
+          const categories = section.categories;
+          //const i18nData = section.i18next;
+          // إضافة قسم جديد
+          const sectionItem = `
+                  <li class="nav-item dropdown" id="${section.page}">
+                      <a class="section-link nav-link text-white menu-link" href="#" data-page-title="${section.title}" data-page-description="${section.description}" data-page-name="${section.page}" data-section-id="${section.sectionId}" role="button" id="${section.sectionId}" aria-expanded="false" data-i18n="${section.i18next}">
                           ${sectionTitle}
                       </a>
                       ${categories.length > 0 ? `
                           <ul class="submenu">
                               ${categories.map(cat => `
-                                  <li><a href="#" class="category-link" data-page-name="${section.page}" data-section-id="${section.sectionId}" data-category-id="${cat.categoryId}">${cat.title.es}</a></li>
+                                  <li><a href="#" class="category-link" data-page-title="${section.title}" data-page-description="${section.description}" data-page-name="${section.page}" data-section-id="${section.sectionId}" data-category-id="${cat.categoryId}">${cat.title.es}</a></li>
                               `).join('')}
                           </ul>
                       ` : ''}
                   </li>
               `;
-              navList.append(sectionItem);
-          });
+          navList.append(sectionItem);
+        });
 
-          $('.category-link').click(function (e) {
-            e.preventDefault();
-            const sectionId = $(this).data('section-id');
-            const categoryId = $(this).data('category-id');
-            const pageName = $(this).data('page-name');
+        $('.category-link').click(function (e) {
+          e.preventDefault();
+          const sectionId = $(this).data('section-id');
+          const categoryId = $(this).data('category-id');
+          const pageName = $(this).data('page-name');
+          const sectionTitle = $(this).data('page-title');
+          const sectionDescription = $(this).data('page-description');
+
+
+          var selectedNavItem = pageName || "index";
+          localStorage.setItem("selectedNavItem", selectedNavItem);
+
+          localStorage.setItem("sectionTitle", sectionTitle);
+          localStorage.setItem("sectionDescription", sectionDescription);
+
+
+          setTimeout(function () {
             window.location.href = `subcategory.html?sectionId=${sectionId}&categoryId=${categoryId}`;
+          }, 20);
 
-            // window.location.href = `${pageName}.html?sectionId=${sectionId}&categoryId=${categoryId}`;
+
+          // window.location.href = `${pageName}.html?sectionId=${sectionId}&categoryId=${categoryId}`;
         });
         $('.section-link').click(function (e) {
           e.preventDefault();
           const pageName = $(this).data('page-name');
-
           const sectionId = $(this).data('section-id');
-          window.location.href = `${pageName}.html?sectionId=${sectionId}`;
+
+
+          const sectionTitle = $(this).data('page-title');
+          const sectionDescription = $(this).data('page-description');
+
+
+
+
+          var selectedNavItem = pageName || "index";
+          localStorage.setItem("selectedNavItem", selectedNavItem);
+
+
+          localStorage.setItem("sectionTitle", sectionTitle);
+          localStorage.setItem("sectionDescription", sectionDescription);
+
+          if (pageName == "index") {
+            setTimeout(function () {
+              window.location.href = `${pageName}.html`;
+            }, 20);
+          } else {
+            setTimeout(function () {
+              window.location.href = `${pageName}.html?sectionId=${sectionId}`;
+            }, 20);
+          }
+
           //window.location.href = `subcategory.html?sectionId=${sectionId}&categoryId=${categoryId}`;
 
+
+
+
           // window.location.href = `categories.html?sectionId=${sectionId}`;
-      });
+        });
 
 
       }
-  }).fail(function () {
+    }).fail(function () {
       console.error("Error loading sections.");
-  });
-}
+    });
+  }
 
 
-loadSectionsStatic();
+  loadSectionsStatic();
+  let headerTitle = localStorage.getItem("sectionTitle");
+  let headerDescription = localStorage.getItem("sectionDescription");
 
 
- 
+  $("#headerTitle").text(headerTitle);
+  $("#headerDescription").text(headerDescription);
 });
 
- // جعل الدالة متاحة عالميًا
- window.loadCategories = function (sectionId) {
-  console.log("loadCategories sectionId", sectionId);
+
+
+
+
+
+// جعل الدالة متاحة عالميًا
+window.loadCategories = function (sectionId) {
   const lang = 'en';
 
   $.ajax({
@@ -183,29 +232,180 @@ loadSectionsStatic();
     success: function (categories) {
       $('#categoriesSection').empty();
 
+      console.log("####categories####", categories);
+
       categories.forEach(category => {
+        console.log("%%%%category%%%%", category);
+
         const title = category.title[lang] || category.title['es'];
+        const description = category.description[lang] || category.description['es'];
+        const content = category.content[lang] || category.content['es'];
         const categoryId = category.categoryId;
 
+        // $('#categoriesSection').append(`
+        //         <div class="col-md-4 mb-4">
+        //             <div class="card category-card" style="height:unset !important" data-category-id="${categoryId}">
+        //                 <img src="${category.imageUrl}" class="card-img-top" alt="${title}" style="">
+        //                 <div class="card-body">
+        //                   <strong class="card-title">${title}</strong> <br />
+        //                   <small class="">${description}</small>
+        //                 </div>
+        //                 <div class="card-body">
+        //                   <a href="javascript:void(0);" class="btn btn-primary">Read More</a>
+        //                 </div>
+        //             </div>
+        //             <div class="row subcategories-container" id="subcategories-${categoryId}" style="display: none;"></div>
+        //         </div>
+        //     `);
+
+
+        //     $('#categoriesSection').append(`
+        //   <div class="col-md-4 mb-4">
+        //     <div class="card category-card" data-bs-toggle="tooltip" data-bs-placement="auto" title="${description}" data-category-id="${categoryId}">
+        //       <img src="${category.imageUrl}" alt="${title}">
+        //       <div class="card-body p-0">
+        //         <strong>${title}</strong>
+        //         <small>${description}</small>
+        //       </div>
+        //       <div class="mt-2">
+        //         <a href="subcategory.html?sectionId=${sectionId}&categoryId=${categoryId}">More info <i class="bi bi-arrow-right"></i></a>
+        //         </div>
+        //     </div>
+        //   </div>
+        // `);
+
+
+
+        // إنشاء الكروت مع بيانات الـ toolTip
         $('#categoriesSection').append(`
-                <div class="col-md-4 mb-4">
-                    <div class="card category-card" data-category-id="${categoryId}">
-                        <img src="${category.imageUrl}" class="card-img-top" alt="${title}" style="max-height: 233px !important;">
-                        <div class="card-body">
-                            <h5 class="card-title">${title}</h5>
-                            <a href="javascript:void(0);" class="btn btn-primary">Read More</a>
-                        </div>
-                    </div>
-                    <div class="row subcategories-container" id="subcategories-${categoryId}" style="display: none;"></div>
-                </div>
-            `);
+  <div class="col-md-3 mb-4">
+    <div class="card category-card"
+         data-category-id="${categoryId}" 
+         data-section-id="${sectionId}"
+         data-tooltip-title="${category.toolTip?.title[lang] || category.toolTip?.title['es'] || ''}"
+         data-tooltip-desc="${category.toolTip?.description[lang] || category.toolTip?.description['es'] || ''}"
+         data-tooltip-img="${category.toolTip?.imageUrl || ''}">
+      <img src="${category.imageUrl}" alt="${title}">
+      <div class="card-body p-0">
+        <strong>${title}</strong>
+        <small>${description}</small>
+      </div>
+      <div class="mt-2">
+        <a href="subcategory.html?sectionId=${sectionId}&categoryId=${categoryId}">
+          More info <i class="bi bi-arrow-right"></i>
+        </a>
+      </div>
+    </div>
+  </div>
+`);
+
+        let tooltipTimeout = null;
+let isHoveringTooltip = false;
+
+$(document).on('mouseenter', '.category-card', function (e) {
+  clearTimeout(tooltipTimeout);
+
+  const $card = $(this);
+  const title = $card.data('tooltip-title');
+  const desc = $card.data('tooltip-desc');
+  const img = $card.data('tooltip-img');
+  const sectionId = $card.data('section-id');
+  const categoryId = $card.data('category-id');
+
+  const tooltip = $('#customTooltip');
+
+  $('#tooltipImage').attr('src', img || '');
+  $('#tooltipTitle').text(title || '');
+  $('#tooltipDesc').text(desc || '');
+
+  tooltip
+    .data('link', `subcategory.html?sectionId=${sectionId}&categoryId=${categoryId}`)
+    .removeClass('visible arrow-top arrow-bottom')
+    .show();
+
+  // استخدم pageX و pageY
+  let top = e.pageY + 2;  // 2px فقط لتفادي تداخل المؤشر مع الديف
+  let left = e.pageX + 2;
+
+  const tooltipWidth = tooltip.outerWidth();
+  const tooltipHeight = tooltip.outerHeight();
+  const windowWidth = $(window).width();
+  const windowHeight = $(window).height();
+  const scrollTop = $(window).scrollTop();
+
+  let positionClass = 'arrow-top';
+
+  // فقط إذا خرج عن الأسفل
+  if (top + tooltipHeight - scrollTop > windowHeight) {
+    top = e.pageY - tooltipHeight - 2;
+    positionClass = 'arrow-bottom';
+  }
+
+  // فقط إذا خرج عن اليمين
+  if (left + tooltipWidth > windowWidth) {
+    left = e.pageX - tooltipWidth - 2;
+  }
+
+  tooltip.css({ top, left }).addClass(positionClass);
+
+  setTimeout(() => tooltip.addClass('visible'), 10);
+
+  // flex direction حسب أبعاد الصورة
+  const imgElement = document.getElementById('tooltipImage');
+  imgElement.onload = function() {
+    const tooltipInner = tooltip.find('.tooltip-inner');
+    if (imgElement.naturalHeight > imgElement.naturalWidth) {
+      tooltipInner.css('flex-direction', 'row');
+      $(imgElement).css('order', 1);
+    } else {
+      tooltipInner.css('flex-direction', 'column');
+      $(imgElement).css('order', 0);
+    }
+  };
+});
+
+
+$(document).on('mouseleave', '.category-card', function () {
+  tooltipTimeout = setTimeout(() => {
+    if (!isHoveringTooltip) {
+      $('#customTooltip').removeClass('visible');
+      setTimeout(() => $('#customTooltip').hide(), 200);
+    }
+  }, 200);
+});
+
+$('#customTooltip').on('mouseenter', function () {
+  isHoveringTooltip = true;
+  clearTimeout(tooltipTimeout);
+});
+
+$('#customTooltip').on('mouseleave', function () {
+  isHoveringTooltip = false;
+  $(this).removeClass('visible');
+  setTimeout(() => $(this).hide(), 200);
+});
+
+$('#customTooltip').on('click', function () {
+  const link = $(this).data('link');
+  if (link) window.location.href = link;
+});
+
+
+        $(".category-card").click(function () {
+          const categoryId = $(this).data("category-id");
+          setTimeout(() => {
+
+            window.location.href = `subcategory.html?sectionId=${sectionId}&categoryId=${categoryId}`;
+          }, 20);
+        });
+
       });
 
-      $(".category-card").click(function () {
-        const categoryId = $(this).data("category-id");
-        console.log("categoryId", categoryId);
-        window.location.href = `subcategory.html?sectionId=${sectionId}&categoryId=${categoryId}`;
-      });
+      // تفعيل الـ Tooltip من Bootstrap
+      // const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+      // tooltipTriggerList.map(el => new bootstrap.Tooltip(el))
+
+
     },
     error: function (err) {
       console.error("Error fetching categories:", err);
@@ -216,8 +416,6 @@ loadSectionsStatic();
 
 // تحميل الفئات الفرعية
 window.loadSubcategories = function (sectionId, categoryId) {
-  console.log("sectionId", sectionId);
-  console.log("categoryId", categoryId);
 
   $.ajax({
     url: `${API_BASE_URL}/section/${sectionId}/category/${categoryId}/subcategories`,
@@ -305,26 +503,38 @@ function loadSubcategoryDescription(sectionId, categoryId, subcategoryId) {
 
 
 function loadSubcategoryDetails(sectionId, categoryId) {
-            const lang = 'en';
+  const lang = 'en';
 
-            $.ajax({
-                url: `${API_BASE_URL}/newsection/section/${sectionId}/category/${categoryId}`,
-                method: 'GET',
-                success: function (data) {
-                    console.log("####data", data);
+  $.ajax({
+    url: `${API_BASE_URL}/newsection/section/${sectionId}/category/${categoryId}`,
+    method: 'GET',
+    success: function (data) {
 
-                    let htmlContent = data.content[lang] || data.content['es'];
-                    console.log("####htmlContent", htmlContent);
-                    document.getElementById("contentContainer").innerHTML = htmlContent;
+      let htmlContent = data.content[lang] || data.content['es'];
+
+      // let headerTitle = data.title[lang] || data.title['es'];
+
+      // let headerTitle = localStorage.getItem("sectionTitle") || data.title[lang] || data.title['es'];
+      // let headerDescription = localStorage.getItem("sectionDescription") || data.description[lang] || data.description['es'];
+
+
+      // document.getElementById("headerTitle").innerHTML = headerTitle;
+      // document.getElementById("headerDescription").innerHTML = headerDescription;
 
 
 
-                },
-                error: function (err) {
-                    console.error("Error fetching category details:", err);
-                }
-            });
-        }
+      // document.getElementById("headerTitle").innerHTML = data.title;
+
+      // document.getElementById("contentContainer").innerHTML = htmlContent;
+
+
+
+    },
+    error: function (err) {
+      console.error("Error fetching category details:", err);
+    }
+  });
+}
 
 function fetchSections() {
   $.ajax({
@@ -372,7 +582,6 @@ function renderSections(sections) {
 //     // Display user name and dashboard link
 
 //     let welcomeText = i18next.t('user_welcome');
-//     console.log("test", welcomeText);
 //     if (welcomeText === 'user_welcome') {
 //       document.getElementById('userName').textContent = `${welcomeText}, ${userName}`;
 
@@ -407,7 +616,7 @@ function renderSections(sections) {
 // });
 
 function runApp() {
- 
+
   // document.addEventListener("DOMContentLoaded", function () {
 
   // Check if user data exists in localStorage

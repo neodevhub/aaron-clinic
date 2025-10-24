@@ -2,9 +2,11 @@
 
 body {
   /* font-family: Arial, sans-serif; */
-  font-family: var(--primary-font-family) !important;
+  /* font-family: var(--primary-font-family) !important; */
   background-color: #f8f9fa;
   color: #212529;
+  /* font-family: tahoma !important; */
+  font-family: 'Source Sans Pro', sans-serif !important;
 }
 
 header {
@@ -23,8 +25,8 @@ button {
 
 .top-header,
 .menu-bar {
-  background-color: var(--primary-color) !important;
-  /* #00a791 !important */
+  /* background-color: var(--primary-color) !important; */
+  background-color: #327835 !important
 }
 
 .menu-bar a.nav-link {
@@ -52,16 +54,16 @@ button.btn.btn-primary {
   border-color: #039b87;
 } */
 
-a.btn.btn-primary {
+/* a.btn.btn-primary {
   background: var(--primary-color);
   border-color: var(--primary-color);
-}
+} */
 
-.btn-check:checked + .btn,
+.btn-check:checked+.btn,
 .btn.active,
 .btn.show,
 .btn:first-child:active,
-:not(.btn-check) + .btn:active {
+:not(.btn-check)+.btn:active {
   color: var(--bs-btn-active-color);
   background-color: #bd5802;
   border-color: #bd5802;
@@ -137,7 +139,7 @@ a.btn.btn-primary {
 }
 
 .thin-header {
-  border-bottom: 1px solid #ddd;
+  /* border-bottom: 1px solid #ddd; */
 }
 
 .thin-header img {
@@ -166,19 +168,20 @@ a.btn.btn-primary {
 .thin-header {
   position: sticky;
   top: 0;
-  z-index: 1030;
+  /* z-index: 1030; */
   box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 .menu-bar {
   position: sticky;
   top: 58px;
-  z-index: 1020;
+  /* z-index: 1020; */
 }
 
 .carousel-item {
   position: relative;
 }
+
 
 .carousel-item::before {
   content: "";
@@ -187,20 +190,24 @@ a.btn.btn-primary {
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
   z-index: 0;
+}
+
+#heroCarousel .carousel-item::before {
+  background-color: rgba(0, 0, 0, 0.5);
 }
 
 .carousel-caption {
   position: absolute;
   bottom: 38%;
   left: 16.5%;
-  z-index: 2;
+  /* z-index: 2; */
   color: white;
 }
 
 .clinic-info {
-  background-color: var(--primary-color) !important;
+  /* background-color: var(--primary-color) !important; */
+  background-color: #204e22 !important;
 }
 
 .clinic-info h2 {
@@ -332,6 +339,11 @@ footer ul.list-inline li {
   margin-right: 1rem;
 }
 
+.footerShared {
+  padding-bottom: 57px;
+  background: #204e22 !important;
+}
+
 #map iframe {
   border: none;
 }
@@ -348,7 +360,8 @@ footer ul.list-inline li {
 
 footer.bg-dark.text-white.pt-5.pb-3 {
   /* background-color: rgb(4 104 121) !important */
-  background-color: var(--primary-color) !important;
+  /* background-color: var(--primary-color) !important; */
+  background-color: #204e22 !important;
 }
 
 /* .subcategory-row {
@@ -373,13 +386,15 @@ footer.bg-dark.text-white.pt-5.pb-3 {
 /* جعل لون الخلفية الأبيض عند hover يغطي كامل ارتفاع الـ nav */
 .menu-bar .nav-link {
   transition: background 0.3s, color 0.3s;
-  padding: 15px 20px; /* تكبير المساحة */
+  padding: 15px 20px;
+  /* تكبير المساحة */
 }
 
 .menu-bar .nav-item:hover .nav-link {
-  background: white !important;
-  color: dark blue !important;
-  height: 100%; /* تأكد من تعبئة الـ nav */
+  background: #28692b !important;
+  color: dark white !important;
+  height: 100%;
+  /* تأكد من تعبئة الـ nav */
   display: block;
   /* font-weight: bold; */
 }
@@ -395,7 +410,7 @@ footer.bg-dark.text-white.pt-5.pb-3 {
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
   border-radius: 0px;
   min-width: 150px;
-  z-index: 1050;
+  z-index: 1;
 }
 
 .submenu li {
@@ -422,6 +437,8 @@ footer.bg-dark.text-white.pt-5.pb-3 {
   display: block;
 }
 
+
+
 img.card-img-top {
   max-height: 255px !important;
 }
@@ -429,17 +446,18 @@ img.card-img-top {
 #floating-consultation-form {
   position: fixed;
   right: 20px;
-  bottom: 20px;
-  width: 270px;
+  bottom: 37px;
+  width: 600px;
   background: white;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
   border-radius: 8px;
   overflow: hidden;
   transition: height 0.3s ease-in-out;
-  z-index: 25000;
+  z-index: 3;
+
 }
 
-#form-header {
+.form-header {
   background: #43a047;
   color: white;
   padding: 12px;
@@ -451,7 +469,7 @@ img.card-img-top {
   cursor: pointer;
 }
 
-#form-header button {
+.form-header button {
   background: transparent;
   border: none;
   color: white;
@@ -470,9 +488,9 @@ img.card-img-top {
 
 .cookie-banner {
   position: fixed;
-  bottom: 20px;
-  left: 20px;
-  right: 20px;
+  bottom: 0;
+  /* left: 20px;
+  right: 20px; */
   background: #333;
   color: white;
   padding: 10px;
@@ -480,20 +498,244 @@ img.card-img-top {
   justify-content: space-between;
   align-items: center;
   border-radius: 5px;
-  z-index: 30000;
-  width: 266px;
+  z-index: 3;
+  width: 100%;
 }
 
 .cookie-banner button {
   background: #4caf50;
   color: white;
   border: none;
-  padding: 5px 10px;
+  padding: 0px 10px;
   cursor: pointer;
   width: 100%;
 }
 
 .headerShared {
   overflow: visible;
-  position: static; /* أو احذفي position بالكامل إن أمكن */
+  position: static;
+  /* أو احذفي position بالكامل إن أمكن */
+}
+
+.navbarShared {
+  z-index: 2;
+}
+
+#categoriesHeader {
+  z-index: 1;
+}
+
+
+
+.card {
+  position: relative;
+  overflow: hidden;
+  border-radius: 15px;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+
+
+.card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /* يخلي الصورة تغطي كامل الكارد بدون تمدد مشوه */
+  transition: transform 0.4s ease;
+}
+
+.card:hover img {
+  transform: scale(1.1);
+  /* تكبير الصورة عند hover */
+}
+
+.card-img-overlay {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.3);
+  transition: background 0.3s ease;
+}
+
+.card:hover .card-img-overlay {
+  background: rgba(0, 0, 0, 0.6);
+}
+
+.card-title {
+  font-size: 1.2rem;
+  transition: transform 0.3s ease, font-size 0.3s ease;
+}
+
+#sectionsSection .card {
+  height: 242px;
+  /* ارتفاع ثابت لكل البطاقات */
+}
+
+#sectionsSection .card-title {
+  color: #fff;
+}
+
+.card:hover .card-title {
+  font-size: 1.5rem;
+  transform: scale(1.1);
+}
+
+.nav-item.active {
+  background-color: #f77200;
+
+}
+
+/* #index {
+      background-color: #007bff; 
+} */
+
+#Footer .sectionsList li a {
+  padding: 0px !important
+}
+
+
+.category-card {
+  border: none;
+  border-radius: 16px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  padding: 28px;
+  text-align: left;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  cursor: pointer;
+  background-color: #fff;
+  min-height: 320px;
+}
+
+.category-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.category-card img {
+  width: 70px;
+  height: 70px;
+  margin-bottom: 15px;
+}
+
+.category-card strong {
+  padding-bottom: 10px;
+  line-height: normal;
+  font-size: 26px;
+  display: block;
+  color: #333;
+}
+
+.category-card small {
+  color: #777;
+  font-size: 17px;
+}
+
+.category-card a {
+  color: #007bff;
+  text-decoration: none;
+  font-size: 17px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.category-card a:hover {
+  text-decoration: underline;
+}
+
+.sectionsList ul li:hover {
+  background: #dde8cb;
+  color: #525848 !important;
+}
+
+.sectionsList ul a:hover {
+  background: #dde8cb;
+  color: #262c1d !important;
+}
+#customTooltip {
+  position: fixed;
+  z-index: 9999;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  padding: 10px;
+  width: 250px;
+  max-width: 80vw;
+  cursor: pointer;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+#customTooltip.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Inner Flex */
+#customTooltip .tooltip-inner {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+#customTooltip .tooltip-text {
+  flex: 1;
+}
+
+#customTooltip img {
+  width: 100px;
+  height: auto;
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+#customTooltip h6 {
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+#customTooltip p {
+  font-size: 0.9rem;
+  color: #555;
+  margin: 0;
+}
+
+/* السهم */
+#customTooltip::after {
+  content: "";
+  position: absolute;
+  width: 0;
+  height: 0;
+  border: 8px solid transparent;
+  transition: all 0.25s ease;
+}
+
+#customTooltip.arrow-bottom::after {
+  top: 100%;
+  left: 20px;
+  border-top-color: white;
+  filter: drop-shadow(0 -1px 1px rgba(0,0,0,0.1));
+}
+
+#customTooltip.arrow-top::after {
+  bottom: 100%;
+  left: 20px;
+  border-bottom-color: white;
+  filter: drop-shadow(0 1px 1px rgba(0,0,0,0.1));
+}
+
+
+.section-link {
+  font-size: 1.1rem;
+  /* font-weight: bold; */
+}
+
+.btn-secondary {
+  background: #43a047;
+}
+.carousel-item .btn:hover {
+  background: #2c682f;
 }

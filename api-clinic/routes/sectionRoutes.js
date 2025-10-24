@@ -33,13 +33,13 @@ router.get('/nav/section', async (req, res) => {
 router.get('/navstatic/section', async (req, res) => {
     try {
         const staticSections = [
-            { title: 'Inicio', page: 'index', description: '', i18next: 'home', categories: [] },
-            { title: 'Equipo', page: 'team', description: 'Equipo', i18next: 'team', categories: [] },
-            { title: 'Patologías', page: 'pathologies', description: 'Los síntomas y patologías más comues de la columna vertebral', i18next: 'pathologies', categories: [] },
-            { title: 'Tratamientos', page: 'treatments', description: 'Tratamientos', i18next: 'treatments', categories: [] },
-            { title: 'Peritaje Médico-Legal', page: 'medical-legal-expertise', description: 'Peritaje Médico-Legal', i18next: 'medical_legal_expertise', categories: [] },
-            { title: 'Información y Consejos', page: 'information-advice', description: 'Información y Consejos', i18next: 'information_and_advice', categories: [] },
-            { title: 'Contacto', page: 'contact', description: 'Contacto', i18next: 'contact', categories: [] }
+            { title: 'Inicio', page: 'index', description: '', i18next: 'home', categories: [], sectionClass: "sectionHome" },
+            { title: 'Equipo', page: 'team', description: 'Equipo', i18next: 'team', categories: [], sectionClass: "sectionTeam" },
+            { title: 'Patologías', page: 'pathologies', description: 'Los síntomas y patologías más comues de la columna vertebral', i18next: 'pathologies', categories: [], sectionClass: "sectionPathologies" },
+            { title: 'Tratamientos', page: 'treatments', description: 'Tratamientos', i18next: 'treatments', categories: [], sectionClass: "sectionTreatments" },
+            { title: 'Peritaje Médico-Legal', page: 'medical-legal-expertise', description: 'Peritaje Médico-Legal', i18next: 'medical_legal_expertise', categories: [], sectionClass: "sectionMedicalLegalExpertise" },
+            { title: 'Información y Consejos', page: 'information-advice', description: 'Información y Consejos', i18next: 'information_and_advice', categories: [], sectionClass: "sectionInformationAdvice" },
+            { title: 'Contacto', page: 'contact', description: 'Contacto', i18next: 'contact', categories: [], sectionClass: "sectionContact" }
         ];
 
 
@@ -81,10 +81,12 @@ router.get('/sections', async (req, res) => {
         const localizedSectionsNew = sections.map(section => ({
             sectionId: section.sectionId,
             title: section.title[lang] || section.title['en'],
+            description: section.description[lang] || section.title['en'],
             imageUrl: section.imageUrl,
             categories: section.categories.map(category => ({
                 categoryId: category.categoryId,
                 title: category.title[lang] || category.title['en'],
+                description: category.description[lang] || category.description['en'],
                 imageUrl: category.imageUrl,
                 content: category.content[lang] || category.content['en'],
             }))
@@ -109,10 +111,12 @@ router.get('/section/:id', async (req, res) => {
         const localizedSectionNew = {
             sectionId: section.sectionId,
             title: section.title[lang] || section.title['en'],
+            description: section.description[lang] || section.description['en'],
             imageUrl: section.imageUrl,
             categories: section.categories.map(category => ({
                 categoryId: category.categoryId,
                 title: category.title[lang] || category.title['en'],
+                description: category.description[lang] || category.description['en'],
                 imageUrl: category.imageUrl,
                 content: category.content[lang] || sub.content['en']
             }))
@@ -161,7 +165,7 @@ router.get('/section/:sectionId/category/:categoryId', async (req, res) => {
 // إضافة قسم جديد
 router.post('/addSection', verifyToken, async (req, res) => {
     try {
-        const { title, imageUrl, categories, status } = req.body;
+        const { title, description, imageUrl, categories, status } = req.body;
 
         // التحقق من صحة البيانات الأساسية
         if (!title || !title.es || !Array.isArray(categories)) {
@@ -171,13 +175,20 @@ router.post('/addSection', verifyToken, async (req, res) => {
         // بناء الكائن الجديد للقسم
         const newSection = new SectionNew({
             title,
+            description,
             imageUrl,
             status: status || 'Published',
             categories: categories.map(category => ({
                 categoryId: new mongoose.Types.ObjectId(),
                 title: category.title,
+                description: category.description,
                 content: category.content || {},
                 imageUrl: category.imageUrl || '',
+                toolTip: category.toolTip ? {
+                    title: category.toolTip.title || {},
+                    description: category.toolTip.description || {},
+                    imageUrl: category.toolTip.imageUrl || ''
+                } : null,
                 status: category.status || 'Published'
             }))
         });
@@ -209,12 +220,19 @@ router.get('/sections', verifyToken, async (req, res) => {
         const localizedSections = sections.map(section => ({
             sectionId: section.sectionId.toString(),  // تحويل ObjectId إلى سلسلة نصية
             title: section.title[lang] || section.title['en'],
+            description: section.description[lang] || section.description['en'],
             imageUrl: section.imageUrl,
             categories: section.categories.map(category => ({
                 categoryId: category.categoryId.toString(),  // تحويل ObjectId إلى سلسلة نصية
                 title: category.title[lang] || category.title['en'],
+                description: category.description[lang] || category.description['en'],
                 content: category.content[lang] || category.content['en'],
                 imageUrl: category.imageUrl,
+                toolTip: category.toolTip ? {
+                    title: category.toolTip.title?.[lang] || category.toolTip.title?.['en'] || '',
+                    description: category.toolTip.description?.[lang] || category.toolTip.description?.['en'] || '',
+                    imageUrl: category.toolTip.imageUrl || ''
+                } : null
             }))
         }));
 
@@ -242,12 +260,19 @@ router.get('/section/:id', verifyToken, async (req, res) => {
         const localizedSection = {
             sectionId: section.sectionId,
             title: section.title[lang] || section.title['en'], // Handle title localization
+            description: section.description[lang] || section.description['en'], // Handle title localization
             imageUrl: section.imageUrl,
             categories: section.categories.map(category => ({
                 categoryId: category.categoryId,
                 title: category.title[lang] || category.title['en'], // Handle category title localization
+                description: category.description[lang] || category.description['en'], // Handle category title localization
                 content: category.content[lang] || category.content['en'], // Handle category content localization
                 imageUrl: category.imageUrl,
+                toolTip: category.toolTip ? {
+                    title: category.toolTip.title?.[lang] || category.toolTip.title?.['en'] || '',
+                    description: category.toolTip.description?.[lang] || category.toolTip.description?.['en'] || '',
+                    imageUrl: category.toolTip.imageUrl || ''
+                } : null
             }))
         };
 
@@ -358,31 +383,76 @@ router.put('/section/:sectionId', verifyToken, async (req, res) => {
 });
 
 // ✅ Update category data within a section without affecting subcategories
+// router.put('/section/:sectionId/category/:categoryId', verifyToken, async (req, res) => {
+//     try {
+//         const { sectionId, categoryId } = req.params;
+//         const updatedData = req.body;
+
+//         // Update only the title and imageUrl of the category
+//         const section = await SectionNew.findOneAndUpdate(
+//             { sectionId, 'categories.categoryId': categoryId },
+//             {
+//                 $set: {
+//                     'categories.$.title': updatedData.title,
+//                     'categories.$.description': updatedData.description,
+//                     'categories.$.imageUrl': updatedData.imageUrl,
+//                     'categories.$.content': updatedData.content,
+//                 }
+//             },
+//             { new: true }
+//         );
+
+//         if (!section) return res.status(404).json({ message: 'Category not found' });
+
+//         res.json(section);
+//     } catch (error) {
+//         res.status(500).json({ message: 'Error updating category', error });
+//     }
+// });
+
+
 router.put('/section/:sectionId/category/:categoryId', verifyToken, async (req, res) => {
     try {
         const { sectionId, categoryId } = req.params;
         const updatedData = req.body;
 
-        // Update only the title and imageUrl of the category
+        // بناء كائن التحديث الديناميكي
+        const updateFields = {
+            'categories.$.title': updatedData.title,
+            'categories.$.description': updatedData.description,
+            'categories.$.imageUrl': updatedData.imageUrl,
+            'categories.$.content': updatedData.content,
+            'categories.$.status': updatedData.status
+        };
+
+        // ✅ إذا كان في toolTip ضمن البيانات المرسلة، أضفه للتحديث
+        if (updatedData.toolTip) {
+            updateFields['categories.$.toolTip'] = {
+                title: updatedData.toolTip.title || {},
+                description: updatedData.toolTip.description || {},
+                imageUrl: updatedData.toolTip.imageUrl || ''
+            };
+        }
+
+        // تنفيذ التحديث
         const section = await SectionNew.findOneAndUpdate(
             { sectionId, 'categories.categoryId': categoryId },
-            {
-                $set: {
-                    'categories.$.title': updatedData.title,
-                    'categories.$.imageUrl': updatedData.imageUrl,
-                    'categories.$.content': updatedData.content,
-                }
-            },
+            { $set: updateFields },
             { new: true }
         );
 
-        if (!section) return res.status(404).json({ message: 'Category not found' });
+        if (!section) {
+            return res.status(404).json({ message: 'Category not found' });
+        }
 
-        res.json(section);
+        res.json({ message: 'Category updated successfully', section });
     } catch (error) {
-        res.status(500).json({ message: 'Error updating category', error });
+        console.error('Error updating category:', error);
+        res.status(500).json({ message: 'Error updating category', error: error.message });
     }
 });
+
+
 
 // ** جلب كل الأقسام **
 router.get("/form/sections", verifyToken, async (req, res) => {
