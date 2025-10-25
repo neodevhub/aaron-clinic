@@ -13,10 +13,14 @@ $(document).ready(function () {
 
     if (cookiesDecision === 'true' || cookiesDecision === 'false') {
       acceptBtn1.style.display = 'none';
-      banner.style.display = 'none';
+      if (cookiesDecision) {
+        banner.style.display = 'none';
+      }
     } else {
       banner.style.display = 'flex';
-      acceptBtn1.style.display = 'block';
+      if (cookiesDecision) {
+        banner.style.display = 'none';
+      }
     }
 
     if (acceptBtn) {
