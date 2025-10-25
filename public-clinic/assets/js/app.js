@@ -300,95 +300,95 @@ window.loadCategories = function (sectionId) {
 `);
 
         let tooltipTimeout = null;
-let isHoveringTooltip = false;
+        let isHoveringTooltip = false;
 
-$(document).on('mouseenter', '.category-card', function (e) {
-  clearTimeout(tooltipTimeout);
+        $(document).on('mouseenter', '.category-card', function (e) {
+          clearTimeout(tooltipTimeout);
 
-  const $card = $(this);
-  const title = $card.data('tooltip-title');
-  const desc = $card.data('tooltip-desc');
-  const img = $card.data('tooltip-img');
-  const sectionId = $card.data('section-id');
-  const categoryId = $card.data('category-id');
+          const $card = $(this);
+          const title = $card.data('tooltip-title');
+          const desc = $card.data('tooltip-desc');
+          const img = $card.data('tooltip-img');
+          const sectionId = $card.data('section-id');
+          const categoryId = $card.data('category-id');
 
-  const tooltip = $('#customTooltip');
+          const tooltip = $('#customTooltip');
 
-  $('#tooltipImage').attr('src', img || '');
-  $('#tooltipTitle').text(title || '');
-  $('#tooltipDesc').text(desc || '');
+          $('#tooltipImage').attr('src', img || '');
+          $('#tooltipTitle').text(title || '');
+          $('#tooltipDesc').text(desc || '');
 
-  tooltip
-    .data('link', `subcategory.html?sectionId=${sectionId}&categoryId=${categoryId}`)
-    .removeClass('visible arrow-top arrow-bottom')
-    .show();
+          tooltip
+            .data('link', `subcategory.html?sectionId=${sectionId}&categoryId=${categoryId}`)
+            .removeClass('visible arrow-top arrow-bottom')
+            .show();
 
-  // استخدم pageX و pageY
-  let top = e.pageY + 2;  // 2px فقط لتفادي تداخل المؤشر مع الديف
-  let left = e.pageX + 2;
+          // استخدم pageX و pageY
+          let top = e.pageY + 2;  // 2px فقط لتفادي تداخل المؤشر مع الديف
+          let left = e.pageX + 2;
 
-  const tooltipWidth = tooltip.outerWidth();
-  const tooltipHeight = tooltip.outerHeight();
-  const windowWidth = $(window).width();
-  const windowHeight = $(window).height();
-  const scrollTop = $(window).scrollTop();
+          const tooltipWidth = tooltip.outerWidth();
+          const tooltipHeight = tooltip.outerHeight();
+          const windowWidth = $(window).width();
+          const windowHeight = $(window).height();
+          const scrollTop = $(window).scrollTop();
 
-  let positionClass = 'arrow-top';
+          let positionClass = 'arrow-top';
 
-  // فقط إذا خرج عن الأسفل
-  if (top + tooltipHeight - scrollTop > windowHeight) {
-    top = e.pageY - tooltipHeight - 2;
-    positionClass = 'arrow-bottom';
-  }
+          // فقط إذا خرج عن الأسفل
+          if (top + tooltipHeight - scrollTop > windowHeight) {
+            top = e.pageY - tooltipHeight - 2;
+            positionClass = 'arrow-bottom';
+          }
 
-  // فقط إذا خرج عن اليمين
-  if (left + tooltipWidth > windowWidth) {
-    left = e.pageX - tooltipWidth - 2;
-  }
+          // فقط إذا خرج عن اليمين
+          if (left + tooltipWidth > windowWidth) {
+            left = e.pageX - tooltipWidth - 2;
+          }
 
-  tooltip.css({ top, left }).addClass(positionClass);
+          tooltip.css({ top, left }).addClass(positionClass);
 
-  setTimeout(() => tooltip.addClass('visible'), 10);
+          setTimeout(() => tooltip.addClass('visible'), 10);
 
-  // flex direction حسب أبعاد الصورة
-  const imgElement = document.getElementById('tooltipImage');
-  imgElement.onload = function() {
-    const tooltipInner = tooltip.find('.tooltip-inner');
-    if (imgElement.naturalHeight > imgElement.naturalWidth) {
-      tooltipInner.css('flex-direction', 'row');
-      $(imgElement).css('order', 1);
-    } else {
-      tooltipInner.css('flex-direction', 'column');
-      $(imgElement).css('order', 0);
-    }
-  };
-});
+          // flex direction حسب أبعاد الصورة
+          const imgElement = document.getElementById('tooltipImage');
+          imgElement.onload = function () {
+            const tooltipInner = tooltip.find('.tooltip-inner');
+            if (imgElement.naturalHeight > imgElement.naturalWidth) {
+              tooltipInner.css('flex-direction', 'row');
+              $(imgElement).css('order', 1);
+            } else {
+              tooltipInner.css('flex-direction', 'column');
+              $(imgElement).css('order', 0);
+            }
+          };
+        });
 
 
-$(document).on('mouseleave', '.category-card', function () {
-  tooltipTimeout = setTimeout(() => {
-    if (!isHoveringTooltip) {
-      $('#customTooltip').removeClass('visible');
-      setTimeout(() => $('#customTooltip').hide(), 200);
-    }
-  }, 200);
-});
+        $(document).on('mouseleave', '.category-card', function () {
+          tooltipTimeout = setTimeout(() => {
+            if (!isHoveringTooltip) {
+              $('#customTooltip').removeClass('visible');
+              setTimeout(() => $('#customTooltip').hide(), 200);
+            }
+          }, 200);
+        });
 
-$('#customTooltip').on('mouseenter', function () {
-  isHoveringTooltip = true;
-  clearTimeout(tooltipTimeout);
-});
+        $('#customTooltip').on('mouseenter', function () {
+          isHoveringTooltip = true;
+          clearTimeout(tooltipTimeout);
+        });
 
-$('#customTooltip').on('mouseleave', function () {
-  isHoveringTooltip = false;
-  $(this).removeClass('visible');
-  setTimeout(() => $(this).hide(), 200);
-});
+        $('#customTooltip').on('mouseleave', function () {
+          isHoveringTooltip = false;
+          $(this).removeClass('visible');
+          setTimeout(() => $(this).hide(), 200);
+        });
 
-$('#customTooltip').on('click', function () {
-  const link = $(this).data('link');
-  if (link) window.location.href = link;
-});
+        $('#customTooltip').on('click', function () {
+          const link = $(this).data('link');
+          if (link) window.location.href = link;
+        });
 
 
         $(".category-card").click(function () {
